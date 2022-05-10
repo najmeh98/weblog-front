@@ -64,7 +64,7 @@ export const CustomInput = ({
           }}
         />
       )}
-      {!(type === "textarea" || type === "password") && (
+      {!(type === "password" || type === "textarea") && (
         <Input
           value={value}
           onChange={onChange}
@@ -82,6 +82,8 @@ export const CustomInput = ({
 
       {type === "textarea" && (
         <textarea
+          value={value}
+          onChange={onChange}
           rows={6}
           style={{ borderColor: t.color.borderColor }}
         ></textarea>
@@ -98,7 +100,7 @@ export const CustomInput = ({
   );
 };
 
-const Input = styled.input`
+export const Input = styled.input`
   outline: none;
   border: 1px solid rgb(204, 204, 204);
   direction: rtl !important;
@@ -114,7 +116,7 @@ const ShowPass = styled.div`
   height: 40px;
   position: absolute;
   left: 0px;
-  top: -40px;
+  top: -50px;
 
   cursor: pointer;
   ${(p) =>
