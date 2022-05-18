@@ -64,11 +64,12 @@ export default function LoginByEmail() {
       if (response?.data.email && response?.status) {
         // localStorage.setItem("token", token);
         loggedIn({ token, email });
+        router.push("/");
       }
     } catch (error) {
       console.log(error);
     }
-  }, [email, loggedIn, password]);
+  }, [email, loggedIn, password, router]);
 
   return (
     <Layout
