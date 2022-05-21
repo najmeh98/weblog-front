@@ -1,4 +1,4 @@
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import React, { SetStateAction, useCallback, useState } from "react";
 import { Verification } from "../component/Api";
 import { useAppContext } from "../component/AppContext";
@@ -14,6 +14,7 @@ export default function Register() {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { login: loggedIn } = useAppContext();
+  let router = useRouter();
   //Register
   const onSubmitVerification = useCallback(async () => {
     if (!email || !name || !password) return;
@@ -24,6 +25,7 @@ export default function Register() {
       const { token, status } = response?.data || {};
       if (token && status) {
         loggedIn({ token, email });
+        router.push("/");
       }
     } catch (error) {
       // if (error.response.status === 403) {
@@ -31,7 +33,7 @@ export default function Register() {
       // }
       setError(error);
     }
-  }, [email, loggedIn, name, password]);
+  }, [email, loggedIn, name, password, router]);
 
   return (
     <>
