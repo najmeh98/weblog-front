@@ -14,12 +14,12 @@ const Home: NextPage = () => {
   const { isLoggedIn, token } = useAppContext();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!token) {
-      router.push("/regiter");
-    }
-    router.push("/");
-  }, [router, token]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push("/regiter");
+  //   }
+  //   router.push("/");
+  // }, [router, token]);
 
   return (
     <div>
