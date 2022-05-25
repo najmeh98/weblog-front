@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const Conatiner = styled.main`
-  margin: 30px auto;
+  margin: 50px auto;
   width: 100%;
   max-width: 1300px;
   display: flex;
