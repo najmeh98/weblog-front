@@ -6,21 +6,27 @@ import { AiOutlineBars } from "react-icons/Ai";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeContext";
+import { IoSettingsOutline } from "react-icons/io5";
 const Items = [
   {
-    title: "Dashboard",
+    title: "داشبورد",
     icon: <GoHome />,
     path: "/dashboard",
   },
   {
-    title: "addPost",
+    title: "افزودن پست",
     icon: <CgNotes />,
     path: "/addPost",
   },
   {
-    title: "Categories",
+    title: "دسته بندی ها",
     icon: <AiOutlineBars />,
     path: "/category",
+  },
+  {
+    title: "تنظیمات پروفایل",
+    icon: <IoSettingsOutline />,
+    path: "/setting",
   },
 ];
 
@@ -31,23 +37,10 @@ export const SidebarOption = () => {
   return (
     <Wrapper
       style={{
-        // background: t.color.bgColor,
         borderLeft: "1px solid t.color.titleColor",
         boxShadow: t.boxShadowbox,
         fontSize: t.fontSize.normal,
         fontWeight: t.fontWeight.bold,
-        // display: "flex",
-        // flexDirection: "column",
-        // // justifyContent: "space-between",
-        // alignItems: "flexStart",
-        // top: 0,
-        // bottom: 0,
-        // right: 0,
-        // height: "100vh",
-        // width: "300px",
-        // gap: "30px",
-        // margin: 0,
-        // padding: 0,
       }}
     >
       {/* <Sidebar style={{ margin: "0px 20px" }}> */}
