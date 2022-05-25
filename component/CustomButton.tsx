@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useTheme } from "./Context/ThemeContext";
-import { FormItem, Wrapper } from "./share/Container";
+import { Wrapper } from "./share/Container";
 
 type Props = {
   onClick: () => void;
@@ -27,7 +27,7 @@ export const CustomButton = ({
   let t = useTheme();
   return (
     <Row style={{ margin: t.margin.medium, ...style }}>
-      <FormItem style={{ width: width, maxWidth: maxWidth }}>
+      <StyleButton style={{ width: width, maxWidth: maxWidth }}>
         <Button
           onClick={onClick}
           disabled={disable}
@@ -43,7 +43,7 @@ export const CustomButton = ({
         >
           {children}
         </Button>
-      </FormItem>
+      </StyleButton>
     </Row>
   );
 };
@@ -59,4 +59,12 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   font-size: 18px;
+`;
+export const StyleButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  justify-content: flex-start;
+
+  direction: rtl;
 `;
