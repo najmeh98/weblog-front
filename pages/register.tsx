@@ -24,7 +24,7 @@ export default function Register() {
 
       const { token, status } = response?.data || {};
       if (token && status) {
-        loggedIn({ token, email });
+        loggedIn({ email, token });
         router.push("/");
       }
     } catch (error) {
