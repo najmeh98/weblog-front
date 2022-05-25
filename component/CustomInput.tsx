@@ -4,12 +4,14 @@ import { useTheme } from "./Context/ThemeContext";
 import { FormItem } from "./share/Container";
 import { Space } from "./share/Space";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-type Props = {
+export type Props = {
   label?: string;
   placeholder?: string;
   value?: string;
   width?: string;
   height?: string;
+  enctype?: string | undefined;
+  name?: string;
   // setValue: (value: string) => void;
   // onChange?: (value?: string | number) => void;
   style?: any;
@@ -23,7 +25,9 @@ export const CustomInput = ({
   placeholder,
   value,
   width,
+  name,
   height,
+  enctype,
   // setValue,
   onChange,
   style,
@@ -37,6 +41,8 @@ export const CustomInput = ({
 
   return (
     <FormItem
+      method="pots"
+      enctype={enctype}
       style={{
         margin: t.margin.medium,
         width: width,
@@ -47,7 +53,7 @@ export const CustomInput = ({
       {label && (
         <>
           <label style={{ color: t.color.titleColor }}>{label}</label>
-          <Space vertical={5} />
+          <Space vertical={10} />
         </>
       )}
       {type === "password" && (
@@ -66,6 +72,7 @@ export const CustomInput = ({
       )}
       {!(type === "password" || type === "textarea") && (
         <Input
+          name={name}
           value={value}
           onChange={onChange}
           type={type}
@@ -78,7 +85,7 @@ export const CustomInput = ({
           }}
         />
       )}
-      <Space vertical={10} />
+      {/* <Space vertical={10} /> */}
 
       {type === "textarea" && (
         <textarea
@@ -108,7 +115,7 @@ export const Input = styled.input`
   text-align: right;
   border-radius: 5px;
   width: 100%;
-  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const ShowPass = styled.div`
