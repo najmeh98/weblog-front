@@ -26,7 +26,7 @@ const Items = [
   {
     title: "تنظیمات پروفایل",
     icon: <IoSettingsOutline />,
-    path: "/setting",
+    path: "/profile",
   },
 ];
 
