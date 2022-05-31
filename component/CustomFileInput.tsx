@@ -15,7 +15,7 @@ export const CustomFileInput = ({
   let t = useTheme();
 
   return (
-    <FormItem method="pots" encType={enctype} style={{ margin: "10px" }}>
+    <FormItem method="POST" encType={enctype} style={{ margin: "10px" }}>
       {label && (
         <>
           <label style={{ color: t.color.titleColor }}>{label}</label>
