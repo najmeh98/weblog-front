@@ -7,6 +7,9 @@ import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeContext";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { config } from "../Api";
 const Items = [
   {
     title: "داشبورد",
@@ -31,8 +34,28 @@ const Items = [
 ];
 
 export const SidebarOption = () => {
+  const [userInfo, setuserInfo] = useState("");
+  const [loading, setLoading] = useState(false);
+
   let router = useRouter();
   let t = useTheme();
+
+  //get request
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${config.apiUrl}/api/data/get-user`)
+      .then((response) => {
+        console.log(response);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Wrapper
@@ -65,7 +88,11 @@ export const SidebarOption = () => {
           }}
           // onClick={handler}
           onClick={() => {
-            router.push(item.path);
+            if (item.path === "/profile") {
+              router.push({ pathname: "/profile", query: { id: "" } });
+            } else {
+              router.push(item.path);
+            }
           }}
           {...item}
         />
