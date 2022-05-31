@@ -22,7 +22,7 @@ export default function AddPost() {
   let t = useTheme();
   let { token, dispatch } = useAppContext();
 
-  console.log(token);
+  // console.log(token);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -34,13 +34,19 @@ export default function AddPost() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState<string>("");
   const [fileName, setFileName] = useState<string>("Choose File");
   const [uploadedFile, setuploadedFile] = useState([]);
 
-  const uploadImageHandler = (e: any) => {
-    console.log(e.target.files[0]);
-    setFormData({ ...formData, file: e.target.files[0] });
+  const uploadImageHandler = (
+    e: FileEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    // console.log(e.target.files[0]);
+    if (e.target && e.target.files) {
+      let File: Blob = e.target.files[0];
+      setFormData({ ...formData, file: File });
+    }
+    //Type 'Blob' is not assignable to type 'string'.ts(2322)
   };
 
   const CreatePostHandler = useCallback(async () => {
@@ -50,10 +56,9 @@ export default function AddPost() {
     data.append("content", formData.content);
     data.append("file", formData.file);
     // formData.append("category", category);
+    console.log(formData.file);
 
-    // console.log(formData.file);
-
-    console.log(token);
+    // console.log(token);
 
     const res: any = await axios.post(
       `${config.apiUrl}/api/data/add`,
@@ -103,7 +108,6 @@ export default function AddPost() {
         enctype="multipart/form-data"
         name="file"
         onChange={uploadImageHandler}
-        
       /> */}
 
       <Space vertical={3} />
