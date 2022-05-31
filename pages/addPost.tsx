@@ -56,7 +56,7 @@ export default function AddPost() {
     console.log(token);
 
     const res: any = await axios.post(
-      `${config.apiUrl}/api/data/add-post`,
+      `${config.apiUrl}/api/data/add`,
       data
       //@ts-ignore
       // { headers: { authorization: token } }
