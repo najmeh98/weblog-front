@@ -25,7 +25,8 @@ export default function AddPost() {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    file: Blob,
+    //  file: Blob -----> Bug
+    file: "",
   });
 
   const [tokenvalue, setToken] = useState<any>("");
