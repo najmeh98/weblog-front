@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { SetStateAction, useCallback, useState } from "react";
+import React, { SetStateAction, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { config, createPost } from "../component/Api";
 import { useAppContext } from "../component/AppContext";
@@ -22,28 +22,34 @@ export default function AddPost() {
   let t = useTheme();
   let { token, dispatch } = useAppContext();
 
-  // console.log(token);
-
   const [formData, setFormData] = useState({
     title: "",
     content: "",
-    file: "",
+    file: Blob,
   });
 
-  const [category, setCategory] = useState();
+  const [tokenvalue, setToken] = useState<any>("");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<string>("");
   const [fileName, setFileName] = useState<string>("Choose File");
-  const [uploadedFile, setuploadedFile] = useState([]);
+  const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    let localToken: any = localStorage.getItem("token");
+    console.log(localToken);
+    setToken(localToken);
+  }, []);
 
   const uploadImageHandler = (
+    //@ts-ignore
     e: FileEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     // console.log(e.target.files[0]);
     if (e.target && e.target.files) {
       let File: Blob = e.target.files[0];
+      //@ts-ignore
       setFormData({ ...formData, file: File });
     }
     //Type 'Blob' is not assignable to type 'string'.ts(2322)
@@ -62,12 +68,12 @@ export default function AddPost() {
 
     const res: any = await axios.post(
       `${config.apiUrl}/api/data/add`,
-      data
+      data,
       //@ts-ignore
-      // { headers: { authorization: token } }
+      { headers: { authorization: tokenvalue } }
     );
     console.log(res);
-  }, [formData, token]);
+  }, [formData.content, formData.file, formData.title, tokenvalue]);
 
   return (
     <MainLayout title="ایجاد پست جدید">
