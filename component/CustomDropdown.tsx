@@ -6,8 +6,8 @@ import styled from "styled-components";
 import { ThemedText } from "./ThemedText";
 import { Space } from "./share/Space";
 
-// export type DropdownItem = { id: string; label: string };
-export type DropdownItem = {};
+export type DropdownItem = { id: string; label: string };
+// export type DropdownItem = {};
 
 type Props = {
   items: DropdownItem[];
@@ -43,6 +43,7 @@ export const CustomDropdown = ({
     justifyContent: "space-between",
     borderWidth: 1,
     paddingHorizontal: 4,
+    zIndex: 1,
   };
 
   let {
@@ -64,8 +65,8 @@ export const CustomDropdown = ({
         </label>
         <Space vertical={10} />
         <div style={menuStyles} {...getToggleButtonProps({})}>
-          {/* {selectedItem ? selectedItem.label : "انتخاب کنید"} */}
-          {selectedItem || "انتخاب کنید"}
+          {selectedItem ? selectedItem.label : "انتخاب کنید"}
+          {/* {(selectedItem && selectedItem) || "انتخاب کنید"} */}
           <FaAngleDown />
         </div>
 
@@ -92,7 +93,7 @@ export const CustomDropdown = ({
                 {...getItemProps({ item, index })}
                 style={
                   highlightedIndex === index
-                    ? { backgroundColor: "ButtonHighlight" }
+                    ? { backgroundColor: t.color.borderColor }
                     : {}
                 }
                 onClick={() => setSelectedItem(item)}
@@ -103,7 +104,7 @@ export const CustomDropdown = ({
                   fontWeight="regular"
                   style={{ padding: "0px 10px" }}
                 >
-                  {item}
+                  {item.label}
                 </ThemedText>
               </List>
             ))}
