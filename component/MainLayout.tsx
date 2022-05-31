@@ -1,13 +1,31 @@
 import React, { ReactNode } from "react";
 import styled from "styled-components";
+import { useTheme } from "./Context/ThemeContext";
 import { SidebarOption } from "./Sidebar/SidebarOption";
+import { ThemedText } from "./ThemedText";
 
-export default function MainLayout({ children }: { children: ReactNode }) {
+export default function MainLayout({
+  children,
+  title,
+}: {
+  children: ReactNode;
+  title: string;
+}) {
+  let t = useTheme();
   return (
     <Wrapper>
       <SidebarOption />
 
-      <Conatiner>{children}</Conatiner>
+      <Conatiner>
+        <MainWrapper
+          style={{ boxShadow: t.boxShadowbox, borderRadius: t.borderRadius }}
+        >
+          <ThemedText fontSize="normal" fontWeight="bold">
+            {title}
+          </ThemedText>
+          {children}
+        </MainWrapper>
+      </Conatiner>
     </Wrapper>
   );
 }
@@ -28,4 +46,10 @@ const Conatiner = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+`;
+
+const MainWrapper = styled.div`
+  width: 100%;
+  max-width: 700px;
+  padding: 30px;
 `;
