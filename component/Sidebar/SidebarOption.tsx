@@ -41,21 +41,21 @@ export const SidebarOption = () => {
   let t = useTheme();
 
   //get request
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${config.apiUrl}/api/data/get-user`)
-      .then((response) => {
-        console.log(response);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios
+  //     .get(`${config.apiUrl}/api/data/get-user`)
+  //     .then((response) => {
+  //       console.log(response);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   return (
     <Wrapper
