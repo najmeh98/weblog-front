@@ -7,9 +7,11 @@ import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 import { useTheme } from "../Context/ThemeContext";
 import { IoSettingsOutline } from "react-icons/io5";
+import { MdExitToApp } from "react-icons/md";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { config } from "../Api";
+import { useAppContext } from "../AppContext";
 const Items = [
   {
     title: "داشبورد",
@@ -31,6 +33,11 @@ const Items = [
     icon: <IoSettingsOutline />,
     path: "/profile",
   },
+  {
+    title: "خروج",
+    icon: <MdExitToApp />,
+    path: "/exit",
+  },
 ];
 
 export const SidebarOption = () => {
@@ -39,6 +46,8 @@ export const SidebarOption = () => {
 
   let router = useRouter();
   let t = useTheme();
+
+  const { logout, login, isLoggedIn } = useAppContext();
 
   //get request
   // useEffect(() => {
@@ -90,6 +99,9 @@ export const SidebarOption = () => {
           onClick={() => {
             if (item.path === "/profile") {
               router.push({ pathname: "/profile", query: { id: "" } });
+            } else if (item.path === "/exit") {
+              logout();
+              router.push("/register");
             } else {
               router.push(item.path);
             }
@@ -97,6 +109,7 @@ export const SidebarOption = () => {
           {...item}
         />
       ))}
+      {isLoggedIn && <p>wellcome</p>}
       {/* </Sidebar> */}
     </Wrapper>
   );
