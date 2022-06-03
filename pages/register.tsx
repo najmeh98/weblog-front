@@ -13,18 +13,30 @@ export default function Register() {
   const [name, setName] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const { login: loggedIn } = useAppContext();
+  const { login: loggedIn, dispatch, state } = useAppContext();
   let router = useRouter();
   //Register
+  console.log(state);
+  console.log(state.id);
   const onSubmitVerification = useCallback(async () => {
     if (!email || !name || !password) return;
     try {
       let response = await Verification({ name, email, password });
       console.log(response);
+      const { status }: { status: number } = response?.data || {};
+      const { token }: { token: string } = response?.data?.user || {};
 
-      const { token, status } = response?.data || {};
       if (token && status) {
-        loggedIn({ email, token });
+        loggedIn({ ...response?.data.user });
+
+        console.log(state);
+
+        // dispatch({
+        //   type: "logged in",
+        //   payload: { ...response?.data.user },
+        //   isLoggedIn: true,
+        // });
+
         router.push("/");
       }
     } catch (error) {
@@ -33,7 +45,7 @@ export default function Register() {
       // }
       setError(error);
     }
-  }, [email, loggedIn, name, password, router]);
+  }, [email, loggedIn, name, password, router, state]);
 
   return (
     <>
