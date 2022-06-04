@@ -63,11 +63,11 @@ export const CustomInput = ({
           type={show ? "text" : "password"}
           placeholder={placeholder}
           style={{ padding: t.padding.normal, height: t.height }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onSubmit();
-            }
-          }}
+          // onKeyDown={(e) => {
+          //   if (e.key === "Enter") {
+          //     onSubmit();
+          //   }
+          // }}
         />
       )}
       {!(type === "password" || type === "textarea") && (
@@ -78,11 +78,11 @@ export const CustomInput = ({
           type={type}
           placeholder={placeholder}
           style={{ padding: t.padding.normal, height: t.height }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onSubmit();
-            }
-          }}
+          // onKeyDown={(e) => {
+          //   if (e.key === "Enter") {
+          //     onSubmit();
+          //   }
+          // }}
         />
       )}
       {/* <Space vertical={10} /> */}
