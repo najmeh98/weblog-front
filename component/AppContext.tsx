@@ -6,11 +6,13 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
-import { Post } from "./definition";
+import { Post, Prop } from "./definition";
 type State = {
+  id?: number;
   isLoggedIn: boolean | undefined;
   token: string | undefined;
   email: string | undefined;
+  value: Prop;
   posts: Post[];
   title: string | undefined;
   content: string | undefined;
@@ -19,6 +21,7 @@ type State = {
 };
 
 const initialState: State = {
+  id: undefined,
   isLoggedIn: false,
   token: undefined,
   email: undefined,
@@ -27,17 +30,19 @@ const initialState: State = {
   content: undefined,
   file: undefined,
   category: undefined,
+  value: {},
 };
 
 type ContextType = State & {
-  login: ({}: { email: string; token: string }) => void;
+  login: ({}) => void;
   logout: () => void;
   dispatch: React.Dispatch<Action>;
+  state: any;
 };
 
 const initialValue: ContextType = {
   ...initialState,
-  login: () => {},
+  login: ({}) => {},
   logout: () => {},
   dispatch: () => {},
 };
@@ -53,53 +58,74 @@ export const AppmanagerContext = (
   }
 ) => {
   //@ts-ignore
-  const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
+  const [state, dispatch] = useReducer<State, Action>(reducer, {});
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+  console.log(state);
+  const { isLoggedIn } = state;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const localEmail = localStorage.getItem("email");
-
-    if (!token || token === undefined) {
+    console.log("token:", token);
+    if (!token || typeof token === "undefined") {
       return;
     }
-    if (!localEmail || localEmail === undefined) {
+    if (!localEmail || typeof localEmail === "undefined") {
       return;
     }
-
-    dispatch({ type: "logged in", email: localEmail, token: token });
+    //@ts-ignore
+    // dispatch({
+    //   type: "logged in",
+    //   payload: { email: localEmail, token: token ,isLoggedIn: true },
+    // });
   }, []);
 
-  const login = useCallback(
-    ({ token, email }: { token: string; email: string }) => {
-      localStorage.setItem("token", token);
-      localStorage.setItem("email", email);
-      dispatch({ type: "logged in", email: email, token });
-    },
-    []
-  );
+  const login = useCallback((prop: Prop) => {
+    console.log(prop);
+    let { token, email } = prop;
+    console.log(email);
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
+    //@ts-ignore
+    dispatch({ type: "logged in", payload: { ...prop }, isLoggedIn: true });
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
-    dispatch({ type: "logged out" });
+    //@ts-ignore
+
+    // dispatch({
+    //   type: "logged out",
+    //   payload: { email: undefined, token: undefined, isLoggedIn: false },
+    // });
   }, []);
 
-  const value = useMemo(() => {
-    state, login, logout, dispatch;
-  }, [login, logout, state]);
+  const contextvalue = useMemo(
+    () => ({
+      logout,
+      login,
+      dispatch,
+      state,
+    }),
+    [login, logout, state]
+  );
 
   return (
-    <AppContext.Provider value={{ state, login, logout, dispatch }}>
+    <AppContext.Provider value={{ login, logout, dispatch, state }}>
       {children}
     </AppContext.Provider>
   );
 };
 
 type Action =
-  | { type: "logged in"; email: string; token: string }
-  | { type: "logged out" }
+  | { type: "logged in"; payload: {}; isLoggedIn: boolean }
+  | { type: "logged out"; payload: {}; isLoggedIn: boolean }
   | {
       type: "post created";
-      post: Post;
+      // post: Post;
       title: string;
       content: string;
       file: any;
@@ -110,18 +136,13 @@ function reducer(state: State, action: Action) {
   switch (action.type) {
     case "logged in":
       return {
-        email: action.email,
-        token: action.token,
-        isLoggedIn: true,
+        ...action.payload,
+        LoggedIn: action.isLoggedIn,
       };
       break;
 
     case "logged out":
-      return {
-        email: undefined,
-        token: undefined,
-        isLoggedIn: false,
-      };
+      return { ...action.payload };
       break;
 
     case "post created":
