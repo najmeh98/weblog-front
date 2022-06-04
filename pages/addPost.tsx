@@ -22,13 +22,6 @@ export default function AddPost() {
   let t = useTheme();
   let { token, dispatch } = useAppContext();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    //  file: Blob -----> Bug
-    file: "",
-  });
-
   const [tokenvalue, setToken] = useState<any>("");
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
@@ -37,44 +30,51 @@ export default function AddPost() {
   const [fileName, setFileName] = useState<string>("Choose File");
   const [category, setCategory] = useState("");
 
-  useEffect(() => {
-    let localToken: any = localStorage.getItem("token");
-    console.log(localToken);
-    setToken(localToken);
-  }, []);
+  //  از state استفاده  کردم ******
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+    file: "",
+  });
 
-  const uploadImageHandler = (
-    //@ts-ignore
-    e: FileEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    // console.log(e.target.files[0]);
+  const uploadImageHandler = (e: {
+    target: { files: React.SetStateAction<string>[] };
+  }) => {
+    console.log(e.target.files[0]);
     if (e.target && e.target.files) {
-      let File: Blob = e.target.files[0];
-      //@ts-ignore
-      setFormData({ ...formData, file: File });
+      let File = e.target.files[0];
+      setFormData({ ...formData, file: e.target.files[0] });
+      // setFile(e.target.files[0]);
     }
-    //Type 'Blob' is not assignable to type 'string'.ts(2322)
+    console.log("file:", file);
   };
-
   const CreatePostHandler = useCallback(async () => {
     setLoading(true);
-    const data = new FormData();
-    data.append("title", formData.title);
-    data.append("content", formData.content);
-    data.append("file", formData.file);
-    // formData.append("category", category);
-    console.log(formData.file);
 
-    // console.log(token);
+    // از FormData  استفاده کردم *********
+    //در هر صورت file ارسال نمیشه
+    const datapost = new FormData();
+    datapost.append("title", title);
+    datapost.append("content", content);
+    datapost.append("file", file);
+    // console.log(formData.file)
+    // let data = {
+    //   title: title,
+    //   content: content,
+    //   file: fileInfo,
+    // };
+    // console.log(data);
 
-    const res: any = await axios.post(
-      `${config.apiUrl}/api/data/add`,
-      data,
-      //@ts-ignore
-      { headers: { authorization: tokenvalue } }
-    );
-    console.log(res);
-  }, [formData.content, formData.file, formData.title, tokenvalue]);
+    //router --> /add فقط برای تست نوشتم
+    axios
+      .post(`${config.apiUrl}/api/data/add-post`, formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [content, file, formData, title]);
 
   return (
     <MainLayout title="ایجاد پست جدید">
@@ -83,9 +83,10 @@ export default function AddPost() {
         label="عنوان"
         placeholder="عنوان..."
         type="text"
-        value={formData.title}
+        value={title}
         onChange={(event: { target: { value: SetStateAction<string> } }) => {
           setFormData({ ...formData, title: event.target.value });
+          // setTitle(event.target.value);
         }}
       />
       <Space vertical={5} />
@@ -94,9 +95,10 @@ export default function AddPost() {
         label="متن اصلی"
         placeholder="متن اصلی"
         type="textarea"
-        value={formData.content}
-        onChange={(event) =>
-          setFormData({ ...formData, content: event.target.value })
+        value={content}
+        onChange={
+          (event) => setFormData({ ...formData, content: event.target.value })
+          // setContent(event.target.value)
         }
       />
       <Space vertical={10} />
@@ -105,17 +107,8 @@ export default function AddPost() {
         label="انتخاب تصویر"
         type="file"
         enctype="multipart/form-data"
-        name="file"
-        // value={fileName}
         onChange={uploadImageHandler}
       />
-      {/* <CustomFileInput
-        label="انتخاب تصویر"
-        type="file"
-        enctype="multipart/form-data"
-        name="file"
-        onChange={uploadImageHandler}
-      /> */}
 
       <Space vertical={3} />
 
@@ -141,3 +134,23 @@ const Wrapper = styled.div`
   max-width: 700px;
   padding: 30px;
 `;
+{
+  /* <CustomFileInput
+          label="انتخاب تصویر"
+          type="file"
+          enctype="multipart/form-data"
+          name="file"
+          onChange={uploadImageHandler}
+        /> */
+}
+{
+  /* <input
+          type="file"
+          encType="multipart/form-data"
+          onChange={(e: {
+            target: { files: React.SetStateAction<string>[] };
+          }) => {
+            return setFile(e.target.files[0]);
+          }}
+        /> */
+}
