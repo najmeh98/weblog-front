@@ -57,13 +57,15 @@ export default function LoginByEmail() {
     setLoading(true);
     try {
       //@ts-ignore
-      let response = await Login({ email, password });
+      let res = await Login({ email, password });
       setLoading(false);
-      console.log(response);
-      let token = response?.data.token;
-      if (response?.data.email && response?.status) {
-        // localStorage.setItem("token", token);
-        loggedIn({ token, email });
+      console.log(res);
+
+      const token: string = res?.data.token || {};
+      const status: string = res?.data || {};
+
+      if (token && status) {
+        loggedIn({ ...res?.data.user });
         router.push("/");
       }
     } catch (error) {
