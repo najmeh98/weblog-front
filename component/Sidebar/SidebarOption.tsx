@@ -49,23 +49,6 @@ export const SidebarOption = () => {
 
   const { logout, login, isLoggedIn } = useAppContext();
 
-  //get request
-  // useEffect(() => {
-  //   setLoading(true);
-  //   axios
-  //     .get(`${config.apiUrl}/api/data/get-user`)
-  //     .then((response) => {
-  //       console.log(response);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
-
   return (
     <Wrapper
       style={{
