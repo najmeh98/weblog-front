@@ -28,15 +28,7 @@ export default function Register() {
 
       if (token && status) {
         loggedIn({ ...response?.data.user });
-
         console.log(state);
-
-        // dispatch({
-        //   type: "logged in",
-        //   payload: { ...response?.data.user },
-        //   isLoggedIn: true,
-        // });
-
         router.push("/");
       }
     } catch (error) {
