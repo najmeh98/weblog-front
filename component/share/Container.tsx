@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 
-export const FormItem = styled.form`
+export const FormItem = styled.div`
   display: flex;
   flex-direction: column;
   /* align-items: flex-start; */
