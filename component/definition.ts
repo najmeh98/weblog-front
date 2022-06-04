@@ -27,3 +27,10 @@ export interface Post {
   // category: typeof Category;
   file: any;
 }
+
+export interface Prop {
+  email: string;
+  fullName: string;
+  id?: Number;
+  token: string;
+}
