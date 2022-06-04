@@ -58,7 +58,7 @@ export const AppmanagerContext = (
   }
 ) => {
   //@ts-ignore
-  const [state, dispatch] = useReducer<State, Action>(reducer, {});
+  const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
   useEffect(() => {
     console.log(state);
   }, [state]);
@@ -97,10 +97,10 @@ export const AppmanagerContext = (
     localStorage.removeItem("token");
     //@ts-ignore
 
-    // dispatch({
-    //   type: "logged out",
-    //   payload: { email: undefined, token: undefined, isLoggedIn: false },
-    // });
+    dispatch({
+      type: "logged out",
+      payload: { email: undefined, token: undefined, isLoggedIn: false },
+    });
   }, []);
 
   const contextvalue = useMemo(
@@ -121,15 +121,11 @@ export const AppmanagerContext = (
 };
 
 type Action =
-  | { type: "logged in"; payload: {}; isLoggedIn: boolean }
+  | { type: "logged in"; payload: Prop; isLoggedIn: boolean }
   | { type: "logged out"; payload: {}; isLoggedIn: boolean }
   | {
       type: "post created";
-      // post: Post;
-      title: string;
-      content: string;
-      file: any;
-      category: string;
+      payload: {};
     };
 
 function reducer(state: State, action: Action) {
@@ -146,14 +142,9 @@ function reducer(state: State, action: Action) {
       break;
 
     case "post created":
-      return [
-        {
-          title: action.title,
-          content: action.content,
-          category: action.category,
-          file: action.file,
-        },
-      ];
+      return;
+      {
+      }
       break;
 
     default:
