@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Theme } from "../types/theme";
 import { useTheme } from "./Context/ThemeContext";
 import { Wrapper } from "./share/Container";
 
@@ -12,6 +13,7 @@ type Props = {
   width?: string;
   maxWidth?: string;
   padding?: string;
+  color?: keyof Theme["color"];
 };
 
 export const CustomButton = ({
@@ -23,6 +25,7 @@ export const CustomButton = ({
   width,
   padding,
   maxWidth,
+  color,
 }: Props) => {
   let t = useTheme();
   return (
@@ -34,7 +37,7 @@ export const CustomButton = ({
           style={{
             width: "100%",
             height: "40px",
-            backgroundColor: t.color.buttonBg,
+            backgroundColor: t.color[color || "buttonBg"],
             color: t.color.textColor,
             borderRadius: t.borderRadius,
             fontSize: t.fontSize.medium,
