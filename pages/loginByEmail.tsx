@@ -18,13 +18,15 @@ export default function LoginByEmail() {
   const [isVerification, setVerification] = useState(false);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const { login: loggedIn } = useAppContext();
+  const { login: CheckLoggedIn } = useAppContext();
   let t = useTheme();
   let url: string;
 
   const router = useRouter();
 
-  const { isLoggedIn } = useAppContext();
+  const { state, dispatch } = useAppContext();
+  console.log(state);
+  // console.log(isLoggedIn);
   interface MyFormValues {
     email: string;
     password: string;
@@ -54,8 +56,9 @@ export default function LoginByEmail() {
       setError("تمامی فیلد ها ضروری است");
     }
 
-    setLoading(true);
     try {
+      setLoading(true);
+      setVerification(true);
       //@ts-ignore
       let res = await Login({ email, password });
       setLoading(false);
@@ -65,13 +68,20 @@ export default function LoginByEmail() {
       const status: string = res?.data || {};
 
       if (token && status) {
-        loggedIn({ ...res?.data.user });
+        CheckLoggedIn({ ...res?.data.user });
+        dispatch({
+          type: "logged in",
+          payload: { ...res?.data.user },
+          isLoggedIn: true,
+        });
+
         router.push("/");
       }
     } catch (error) {
       console.log(error);
+      setVerification(false);
     }
-  }, [email, loggedIn, password, router]);
+  }, [CheckLoggedIn, dispatch, email, password, router]);
 
   return (
     <Layout
@@ -112,7 +122,7 @@ export default function LoginByEmail() {
         style={{ justifyContent: "center" }}
         disable={loading}
       >
-        ورود
+        {isVerification ? "در حال تایید" : "ورود"}
       </CustomButton>
     </Layout>
   );
