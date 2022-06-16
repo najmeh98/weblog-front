@@ -16,8 +16,8 @@ export default function Register() {
   const { login: loggedIn, dispatch, state } = useAppContext();
   let router = useRouter();
   //Register
-  console.log(state);
-  console.log(state.id);
+  // console.log(state);
+  // console.log(state.id);
   const onSubmitVerification = useCallback(async () => {
     if (!email || !name || !password) return;
     try {
