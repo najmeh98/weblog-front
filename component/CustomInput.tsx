@@ -52,8 +52,8 @@ export const CustomInput = ({
     >
       {label && (
         <>
-          <label style={{ color: t.color.titleColor }}>{label}</label>
-          <Space vertical={10} />
+          <label style={{ color: t.color.labelColor }}>{label}</label>
+          {/* <Space vertical={10} /> */}
         </>
       )}
       {type === "password" && (
@@ -92,7 +92,11 @@ export const CustomInput = ({
           value={value}
           onChange={onChange}
           rows={6}
-          style={{ borderColor: t.color.borderColor }}
+          style={{
+            borderColor: t.color.borderColor,
+            resize: "none",
+            padding: t.padding.normal,
+          }}
         ></textarea>
       )}
 
@@ -116,6 +120,11 @@ export const Input = styled.input`
   border-radius: 5px;
   width: 100%;
   margin-bottom: 10px;
+  margin-top: 10px;
+  resize: none;
+  &::placeholder {
+    font-size: 13px;
+  }
 `;
 
 const ShowPass = styled.div`
