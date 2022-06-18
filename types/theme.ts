@@ -29,6 +29,7 @@ export interface Theme {
     bgColor: string;
     borderColor: string;
     titleColor: string;
+    labelColor: string;
     buttonBg: string;
     textColor: string;
     errortext: string;
