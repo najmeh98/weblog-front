@@ -21,17 +21,17 @@ const Items = [
   {
     title: "افزودن پست",
     icon: <CgNotes />,
-    path: "/addPost",
+    path: "/posts/addPost",
   },
   {
     title: "دسته بندی ها",
     icon: <AiOutlineBars />,
-    path: "/category",
+    // path: "/category",
   },
   {
     title: "تنظیمات پروفایل",
     icon: <IoSettingsOutline />,
-    path: "/profile",
+    path: "/user/profile",
   },
   {
     title: "خروج",
@@ -47,7 +47,9 @@ export const SidebarOption = () => {
   let router = useRouter();
   let t = useTheme();
 
-  const { logout, login, isLoggedIn } = useAppContext();
+  const { logout, login, state } = useAppContext();
+  console.log(state);
+  const { id, fullName }: any = state.userInfo;
 
   return (
     <Wrapper
@@ -80,8 +82,11 @@ export const SidebarOption = () => {
           }}
           // onClick={handler}
           onClick={() => {
-            if (item.path === "/profile") {
-              router.push({ pathname: "/profile", query: { id: "" } });
+            if (item.path === "/user/profile") {
+              router.push({
+                pathname: "/user/profile",
+                query: { id: id, slug: fullName },
+              });
             } else if (item.path === "/exit") {
               logout();
               router.push("/register");
@@ -92,7 +97,7 @@ export const SidebarOption = () => {
           {...item}
         />
       ))}
-      {isLoggedIn && <p>wellcome</p>}
+
       {/* </Sidebar> */}
     </Wrapper>
   );
