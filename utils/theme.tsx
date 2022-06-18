@@ -19,7 +19,7 @@ export const lightTheme: Theme = {
   },
   margin: {
     samll: 5,
-    medium: 10,
+    medium: 6,
     Large: 15,
   },
   height: 40,
@@ -35,6 +35,7 @@ export const lightTheme: Theme = {
     bgColor: "#fff",
     borderColor: "rgb(204, 204, 204)",
     titleColor: "#7a7a7a",
+    labelColor: "#000",
     buttonBg: "rgb(131, 123, 201)",
     textColor: "#fff",
     errortext: "#dd2020",
