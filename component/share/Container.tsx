@@ -14,3 +14,6 @@ export const FormItem = styled.div`
 
   direction: rtl;
 `;
+export const ButtonStyle = styled.div`
+  display: flex;
+`;
