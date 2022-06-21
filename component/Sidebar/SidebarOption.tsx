@@ -12,12 +12,18 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { config } from "../Api";
 import { useAppContext } from "../AppContext";
+import { ThemedText } from "../ThemedText";
 const Items = [
   {
     title: "داشبورد",
     icon: <GoHome />,
     path: "/dashboard",
   },
+  // {
+  //   title: "پست ها",
+  //   icon: <CgNotes />,
+  //   path: "/posts",
+  // },
   {
     title: "افزودن پست",
     icon: <CgNotes />,
@@ -33,6 +39,7 @@ const Items = [
     icon: <IoSettingsOutline />,
     path: "/user/profile",
   },
+
   {
     title: "خروج",
     icon: <MdExitToApp />,
@@ -66,12 +73,23 @@ export const SidebarOption = () => {
           height: "50px",
           display: " flex",
           alignItems: "center",
+          justifyContent: "space-between",
           padding: "10px",
           borderBottom: "1px solid #7a7a7a30",
-          // marginLeft: "10px",
+          cursor: "pointer",
         }}
       >
         <FaBars />
+        <ThemedText
+          onClick={() => router.push("/")}
+          style={{
+            fontWeight: t.fontWeight.bold,
+            fontSize: t.fontSize.semiLarge,
+            color: t.color.titleColor,
+          }}
+        >
+          {fullName}
+        </ThemedText>
       </Navbar>
 
       {Items.map((item, index) => (
@@ -89,7 +107,7 @@ export const SidebarOption = () => {
               });
             } else if (item.path === "/exit") {
               logout();
-              router.push("/register");
+              router.push("/auth/register");
             } else {
               router.push(item.path);
             }
