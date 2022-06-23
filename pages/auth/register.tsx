@@ -53,7 +53,7 @@ export default function Register() {
       <Layout
         title="ثبت نام"
         textHelp="حساب کاربری دارید؟ ورود"
-        path="/loginByEmail"
+        path="/auth/loginByEmail"
       >
         <CustomInput
           placeholder="نام"
