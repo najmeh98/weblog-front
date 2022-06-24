@@ -18,7 +18,10 @@ export default function MainLayout({
 
       <Conatiner>
         <MainWrapper
-          style={{ boxShadow: t.boxShadowbox, borderRadius: t.borderRadius }}
+          style={{
+            boxShadow: t.boxShadowbox,
+            borderRadius: t.borderRadius.normal,
+          }}
         >
           <ThemedText fontSize="normal" fontWeight="bold">
             {title}

@@ -39,7 +39,7 @@ export const CustomButton = ({
             height: "40px",
             backgroundColor: t.color[color || "buttonBg"],
             color: t.color.textColor,
-            borderRadius: t.borderRadius,
+            borderRadius: t.borderRadius.normal,
             fontSize: t.fontSize.medium,
             padding: padding,
           }}

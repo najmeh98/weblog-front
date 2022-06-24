@@ -37,7 +37,7 @@ export const CustomInputText = ({
           onChange={onChange}
           type={type}
           placeholder={placeholder}
-          style={{ padding: t.padding.normal, height: t.height }}
+          style={{ padding: t.padding.normal, height: t.height.small }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onSubmit();

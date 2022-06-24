@@ -62,7 +62,7 @@ export const CustomInput = ({
           onChange={onChange}
           type={show ? "text" : "password"}
           placeholder={placeholder}
-          style={{ padding: t.padding.normal, height: t.height }}
+          style={{ padding: t.padding.normal, height: t.height.small }}
           // onKeyDown={(e) => {
           //   if (e.key === "Enter") {
           //     onSubmit();
@@ -77,7 +77,7 @@ export const CustomInput = ({
           onChange={onChange}
           type={type}
           placeholder={placeholder}
-          style={{ padding: t.padding.normal, height: t.height }}
+          style={{ padding: t.padding.normal, height: t.height.small }}
           // onKeyDown={(e) => {
           //   if (e.key === "Enter") {
           //     onSubmit();

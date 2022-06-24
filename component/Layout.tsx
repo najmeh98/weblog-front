@@ -21,7 +21,7 @@ export default function Layout({
     <ContentWrapper>
       <FormContainer>
         <Title>{title}</Title>
-        <Box style={{ borderRadius: t.borderRadius }}>{children}</Box>
+        <Box style={{ borderRadius: t.borderRadius.normal }}>{children}</Box>
         <HelpText
           onClick={() => {
             router.push(path);

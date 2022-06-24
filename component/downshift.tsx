@@ -39,7 +39,7 @@ export const Item = ({
     fontSize: theme.fontSize,
     backgroundColor: theme.color.borderColor,
     // borderWidth: "1px solid",
-    borderRadius: theme.borderRadius,
+    borderRadius: theme.borderRadius.normal,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -57,7 +57,7 @@ export const Item = ({
         <ul
           {...getMenuProps()}
           style={{
-            borderRadius: theme.borderRadius,
+            borderRadius: theme.borderRadius.normal,
             backgroundColor: theme.color.borderColor,
             cursor: "pointer",
           }}

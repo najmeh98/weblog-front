@@ -27,7 +27,7 @@ export const CustomFileInput = ({
         type={type}
         name={name}
         placeholder={placeholder}
-        style={{ padding: t.padding.normal, height: t.height }}
+        style={{ padding: t.padding.normal, height: t.height.small }}
       />
     </FormItem>
   );

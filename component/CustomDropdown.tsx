@@ -36,7 +36,7 @@ export const CustomDropdown = ({
     width: "100%",
     height: 40,
     padding: t.padding.fullpadding,
-    borderRadius: t.borderRadius,
+    borderRadius: t.borderRadius.normal,
     display: "flex",
     cursor: "pointer",
     alignItems: "center",
@@ -73,7 +73,7 @@ export const CustomDropdown = ({
         <ul
           {...getMenuProps()}
           style={{
-            borderRadius: t.borderRadius,
+            borderRadius: t.borderRadius.normal,
             borderColor: t.color.borderColor,
             // border: `1px solid ${t.color.borderColor}`,
             // border: "none",
