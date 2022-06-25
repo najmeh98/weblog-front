@@ -21,16 +21,20 @@ export const Category: DropdownItem[] = [
 // const Category: string[] = ["دیگر", "علمی", "خبری", "سرگرمی ", "شخصی"];
 
 export interface Post {
-  // id?: string;
+  id?: string;
   title: string;
   content: string;
-  // category: typeof Category;
   file: any;
+  published?: boolean;
 }
 
 export interface Prop {
+  id?: number;
   email: string;
   fullName: string;
-  id?: Number;
   token: string;
+  bio?: string;
+  skill?: string;
+  createdAt?: string;
+  isAdmin?: boolean;
 }
