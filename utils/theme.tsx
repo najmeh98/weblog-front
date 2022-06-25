@@ -22,8 +22,15 @@ export const lightTheme: Theme = {
     medium: 6,
     Large: 15,
   },
-  height: 40,
-  width: "",
+  height: {
+    small: 40,
+    medium: 100,
+    large: 170,
+  },
+  width: {
+    maxWidth4: "400px",
+    maxWidth3: "300px",
+  },
   padding: {
     small: 4,
     normal: 8,
@@ -40,7 +47,10 @@ export const lightTheme: Theme = {
     textColor: "#fff",
     errortext: "#dd2020",
   },
-  borderRadius: 10,
+  borderRadius: {
+    small: 5,
+    normal: 10,
+  },
   boxShadowbox: "0 1px 11px hsl(0deg 0% 66% / 27%)",
   buttoncolor: "",
   direction: "rtl",

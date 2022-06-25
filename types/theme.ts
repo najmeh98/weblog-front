@@ -16,8 +16,15 @@ export interface Theme {
     medium: number;
     Large: number;
   };
-  height: number;
-  width: string;
+  height: {
+    small: number;
+    medium: number;
+    large: number;
+  };
+  width: {
+    maxWidth4: string;
+    maxWidth3: string;
+  };
   padding: {
     small: number;
     normal: number;
@@ -34,7 +41,10 @@ export interface Theme {
     textColor: string;
     errortext: string;
   };
-  borderRadius: number;
+  borderRadius: {
+    small: number;
+    normal: number;
+  };
   boxShadowbox: string;
   buttoncolor: string;
   direction: string;
