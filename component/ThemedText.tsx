@@ -10,6 +10,7 @@ export const ThemedText = ({
   color,
   opacity,
   style,
+  onClick,
 }: {
   children: ReactNode;
   lineHeight?: number;
@@ -18,10 +19,12 @@ export const ThemedText = ({
   color?: keyof Theme["color"];
   opacity?: number;
   style?: any;
+  onClick?: () => void;
 }) => {
   const t = useTheme();
   return (
     <h1
+      onClick={onClick}
       style={{
         fontSize: t.fontSize[fontSize || "normal"],
         fontWeight: t.fontWeight[fontWeight || "regular"],
