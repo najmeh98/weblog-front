@@ -118,7 +118,7 @@ export default function EditPost() {
           padding="10px 30px"
           style={{ justifyContent: "center" }}
           color="errortext"
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/")}
         >
           انصراف
         </CustomButton>

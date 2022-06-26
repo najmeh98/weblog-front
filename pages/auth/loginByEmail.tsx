@@ -25,7 +25,7 @@ export default function LoginByEmail() {
   const router = useRouter();
 
   const { state, dispatch } = useAppContext();
-  console.log(state);
+  // console.log(state);
   // console.log(isLoggedIn);
   interface MyFormValues {
     email: string;
@@ -87,7 +87,7 @@ export default function LoginByEmail() {
     <Layout
       title="ورود"
       textHelp="حساب کاربری ندارید؟ ثبت نام"
-      path="/register"
+      path="/auth/register"
     >
       <CustomInput
         placeholder="example@gmail.com"
