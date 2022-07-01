@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {
   createContext,
   useCallback,
@@ -6,31 +7,35 @@ import React, {
   useMemo,
   useReducer,
 } from "react";
+import { config } from "./Api";
 import { Post, Prop } from "./definition";
 type State = {
-  id?: number;
+  // id?: number;
   isLoggedIn: boolean | undefined;
-  token: string | undefined;
-  email: string | undefined;
-  value: Prop;
+  userInfo: Prop;
   posts: Post[];
-  title: string | undefined;
-  content: string | undefined;
-  file: any;
-  category: string | undefined;
+  // token: string | undefined;
+  // email: string | undefined;
+  // value: Prop;
+
+  // title: string | undefined;
+  // content: string | undefined;
+  // file: any;
+  // category: string | undefined;
 };
 
 const initialState: State = {
-  id: undefined,
+  // id: undefined,
   isLoggedIn: false,
-  token: undefined,
-  email: undefined,
+  userInfo: { email: "", fullName: "", token: "", id: undefined },
   posts: [],
-  title: undefined,
-  content: undefined,
-  file: undefined,
-  category: undefined,
-  value: {},
+  // token: undefined,
+  // email: undefined,
+  // email: undefined,
+  // title: undefined,
+  // content: undefined,
+  // file: undefined,
+  // category: undefined,
 };
 
 type ContextType = State & {
@@ -62,12 +67,12 @@ export const AppmanagerContext = (
   useEffect(() => {
     console.log(state);
   }, [state]);
-  console.log(state);
+
   const { isLoggedIn } = state;
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const localEmail = localStorage.getItem("email");
+    const token: any = localStorage.getItem("token");
+    const localEmail: any = localStorage.getItem("email");
     console.log("token:", token);
     if (!token || typeof token === "undefined") {
       return;
@@ -76,11 +81,47 @@ export const AppmanagerContext = (
       return;
     }
     //@ts-ignore
-    // dispatch({
-    //   type: "logged in",
-    //   payload: { email: localEmail, token: token ,isLoggedIn: true },
-    // });
+    dispatch({
+      type: "logged in",
+      token: token,
+    });
   }, []);
+
+  const handleReload = useCallback(() => {
+    const token = localStorage.getItem("token");
+    const localEmail: any = localStorage.getItem("email");
+
+    axios
+      .post(
+        `${config.apiUrl}/api/data/userValid`,
+        {},
+
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+        if ((result.status as number) == 200) {
+          const Userdata = result?.data.user;
+          const Userpost = result?.data?.post;
+          //@ts-ignore
+          dispatch({
+            type: "initial data",
+            payload: Userpost,
+          });
+          //@ts-ignore
+          dispatch({ type: "logged in", payload: Userdata });
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    handleReload();
+  }, [handleReload]);
 
   const login = useCallback((prop: Prop) => {
     console.log(prop);
@@ -89,17 +130,16 @@ export const AppmanagerContext = (
     localStorage.setItem("token", token);
     localStorage.setItem("email", email);
     //@ts-ignore
-    dispatch({ type: "logged in", payload: { ...prop }, isLoggedIn: true });
+    dispatch({ type: "logged in", payload: { ...prop } });
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
     //@ts-ignore
-
     dispatch({
       type: "logged out",
-      payload: { email: undefined, token: undefined, isLoggedIn: false },
+      payload: { email: undefined, token: undefined },
     });
   }, []);
 
@@ -118,33 +158,81 @@ export const AppmanagerContext = (
       {children}
     </AppContext.Provider>
   );
+  // return {
+  //   ...state,
+  //   dispatch,
+  //   login,
+  //   logout,
+  // };
 };
 
 type Action =
-  | { type: "logged in"; payload: Prop; isLoggedIn: boolean }
-  | { type: "logged out"; payload: {}; isLoggedIn: boolean }
-  | {
-      type: "post created";
-      payload: {};
-    };
+  | { type: "logged in"; payload: Prop }
+  | { type: "logged out"; payload: {} }
+  | { type: "post created"; payload: Post }
+  | { type: "initial data"; payload: Post[] }
+  | { type: "post deleted"; payload: any }
+  | { type: "post edited"; payload: Post };
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
     case "logged in":
       return {
-        ...action.payload,
-        LoggedIn: action.isLoggedIn,
+        ...state,
+        isLoggedIn: true,
+        userInfo: {
+          ...action.payload,
+        },
+        // isLoggedIn: action.isLoggedIn,
       };
       break;
-
     case "logged out":
-      return { ...action.payload };
+      return { ...action.payload, isLoggedIn: false };
       break;
-
     case "post created":
-      return;
-      {
-      }
+      // const newPost: any = [state.posts];
+      // newPost.push(action.payload.data);
+      // state.posts = newPost;
+      const updatepost = [...state.posts, { ...action.payload }];
+      console.log({
+        ...state,
+        isLoggedIn: true,
+        posts: updatepost,
+      });
+      return {
+        ...state,
+        isLoggedIn: true,
+        posts: updatepost,
+      };
+      break;
+    case "initial data":
+      console.log("initial data", { posts: action.payload });
+      return {
+        ...state,
+        isLoggedIn: true,
+        posts: action.payload,
+      };
+      break;
+    case "post deleted":
+      let index: any = state.posts.findIndex((ps) => ps.id == action.payload);
+      return {
+        ...state,
+        isLoggedIn: true,
+        posts: state.posts.filter((post) => post.id !== action.payload),
+      };
+      break;
+    case "post edited":
+      // find index
+      const postId = state.posts.findIndex(
+        (post) => post.id === action.payload.id
+      );
+      //update posts
+      const editPost = [...state.posts, (state.posts[postId] = action.payload)];
+
+      return {
+        ...state,
+        posts: editPost,
+      };
       break;
 
     default:
