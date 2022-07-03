@@ -1,10 +1,11 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { AppmanagerContext } from "../component/AppContext";
+import { AppContext, AppmanagerContext } from "../component/AppContext";
 import { ThemeContext } from "../component/Context/ThemeContext";
 import { useState } from "react";
 import { lightTheme } from "../utils/theme";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -28,3 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
+function useAppManager() {
+  throw new Error("Function not implemented.");
+}
