@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { config, Login } from "../../component/Api";
 import { useAppContext } from "../../component/AppContext";
 import { useTheme } from "../../component/Context/ThemeContext";
-import { CustomButton } from "../../component/customButton";
+import { CustomButton } from "../../component/CustomButton";
 import { CustomInput } from "../../component/CustomInput";
 import { ErrorText } from "../../component/ErrorText";
 import { HelpText } from "../../component/HelpText";
