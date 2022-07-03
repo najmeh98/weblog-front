@@ -10,8 +10,7 @@ import { CustomInput } from "../../component/CustomInput";
 import { ErrorText } from "../../component/ErrorText";
 import { HelpText } from "../../component/HelpText";
 import Layout from "../../component/Layout";
-import { useFormik } from "formik";
-import { Formik } from "formik";
+
 export default function LoginByEmail() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
