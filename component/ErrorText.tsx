@@ -10,7 +10,6 @@ export const ErrorText = ({ children }: { children: ReactNode }) => {
         fontSize: t.fontSize.smaller,
         fontFamily: t.fontFamily.MainFont,
         color: t.color.errortext,
-        direction: t.direction,
       }}
     >
       {children}
