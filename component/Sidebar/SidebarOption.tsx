@@ -13,17 +13,17 @@ import axios from "axios";
 import { config } from "../Api";
 import { useAppContext } from "../AppContext";
 import { ThemedText } from "../ThemedText";
-const Items = [
+type item = {
+  title: string;
+  icon: JSX.Element;
+  path?: string;
+};
+const Items: item[] = [
   {
     title: "داشبورد",
     icon: <GoHome />,
     path: "/dashboard",
   },
-  // {
-  //   title: "پست ها",
-  //   icon: <CgNotes />,
-  //   path: "/posts",
-  // },
   {
     title: "افزودن پست",
     icon: <CgNotes />,
@@ -32,7 +32,7 @@ const Items = [
   {
     title: "دسته بندی ها",
     icon: <AiOutlineBars />,
-    // path: "/category",
+    path: "/",
   },
   {
     title: "تنظیمات پروفایل",
@@ -47,9 +47,8 @@ const Items = [
   },
 ];
 
-export const SidebarOption = () => {
-  const [userInfo, setuserInfo] = useState("");
-  const [loading, setLoading] = useState(false);
+export const SidebarOption = (): JSX.Element => {
+  const [loading, setLoading] = useState<boolean>(false);
 
   let router = useRouter();
   let t = useTheme();
@@ -67,7 +66,6 @@ export const SidebarOption = () => {
         fontWeight: t.fontWeight.bold,
       }}
     >
-      {/* <Sidebar style={{ margin: "0px 20px" }}> */}
       <Navbar
         style={{
           height: "50px",
@@ -92,13 +90,12 @@ export const SidebarOption = () => {
         </ThemedText>
       </Navbar>
 
-      {Items.map((item, index) => (
+      {Items.map((item: item, index: number) => (
         <SidebarItem
           key={index}
-          isActive={() => {
-            router.pathname === item.path;
-          }}
-          // onClick={handler}
+          // isActive={() => {
+          //   router.pathname === item.path;
+          // }}
           onClick={() => {
             if (item.path === "/user/profile") {
               router.push({
@@ -109,14 +106,12 @@ export const SidebarOption = () => {
               logout();
               router.push("/auth/register");
             } else {
-              router.push(item.path);
+              router.push(item.path as string);
             }
           }}
           {...item}
         />
       ))}
-
-      {/* </Sidebar> */}
     </Wrapper>
   );
 };
