@@ -10,7 +10,7 @@ export const BoxContainer = ({
 }: {
   children: ReactNode;
   style?: any;
-}) => {
+}): JSX.Element => {
   let t = useTheme();
 
   return (
