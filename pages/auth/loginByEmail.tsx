@@ -23,9 +23,8 @@ export default function LoginByEmail() {
 
   const router = useRouter();
 
-  const { state, dispatch } = useAppContext();
-  // console.log(state);
-  // console.log(isLoggedIn);
+  const { dispatch } = useAppContext();
+
   interface MyFormValues {
     email: string;
     password: string;
