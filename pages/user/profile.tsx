@@ -1,6 +1,4 @@
 import axios, { AxiosError } from "axios";
-import { useFormik, FormikProps } from "formik";
-import * as Yup from "yup";
 import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 import { config, createname } from "../../component/Api";
@@ -29,15 +27,7 @@ const initialValues = {
   skill: "",
 };
 
-const validationSchema = Yup.object({
-  password: Yup.string().required("وارد کردن پسورد الزامی است"),
-  newpassword: Yup.string().notRequired(),
-  Renewpassword: Yup.string().notRequired(),
-  bio: Yup.string().notRequired(),
-  skill: Yup.string().notRequired(),
-});
-
-export default function Profile() {
+export default function Profile(): JSX.Element {
   const { state, dispatch } = useAppContext();
   const { token }: any = state?.userInfo;
   const { query } = useRouter();
@@ -100,12 +90,6 @@ export default function Profile() {
     }
   };
 
-  // const formik: FormikProps<formValueType> = useFormik<formValueType>({
-  //   initialValues,
-  //   onSubmit: handleProfile,
-  //   validationSchema,
-  // });
-
   return (
     <MainLayout title="تنظیم پروفایل ">
       <Space vertical={10} />
@@ -118,7 +102,6 @@ export default function Profile() {
           setProfileValue({ ...profileValue, password: e.target.value })
         }
       />
-      {/* <Space vertical={5} /> */}
       <CustomInput
         type="password"
         label="پسورد جدید "
@@ -128,7 +111,6 @@ export default function Profile() {
           setProfileValue({ ...profileValue, newpassword: e.target.value })
         }
       />
-      {/* <Space vertical={15} /> */}
       <CustomInput
         type="password"
         label="تکرار پسورد جدید "
