@@ -3,27 +3,26 @@ import styled from "styled-components";
 import { useTheme } from "../Context/ThemeContext";
 
 type Props = {
-  isActive: any;
+  // isActive: () => void;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   title: string;
   icon: JSX.Element;
-  path: string;
-  fillIcon: JSX.Element;
+
+  // fillIcon: JSX.Element;
 };
 
 export const SidebarItem = ({
-  isActive,
+  // isActive,
   onClick,
-  path,
   icon,
   title,
-  fillIcon,
-}: Props) => {
+}: // fillIcon,
+Props): JSX.Element => {
   let t = useTheme();
   return (
     <Wrapper
       onClick={onClick}
-      isActive={isActive}
+      // isActive={isActive}
       style={{
         padding: " 0px 20px",
         display: "flex",
@@ -39,7 +38,8 @@ export const SidebarItem = ({
           alignItems: "center",
         }}
       >
-        {isActive ? icon : fillIcon}
+        {/* {isActive ? icon : fillIcon} */}
+        {icon}
       </Span>
       {title}
     </Wrapper>
