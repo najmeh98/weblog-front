@@ -22,7 +22,7 @@ type typeofPost = {
   handlePostInfo: () => void;
 };
 
-export const CategoryBox = ({ deletepost, post }: Prop) => {
+export const CategoryBox = ({ deletepost, post }: Prop): JSX.Element => {
   let t = useTheme();
   const router = useRouter();
   console.log(post);
