@@ -17,9 +17,8 @@ export default function Register() {
   const { login: loggedIn, dispatch, state } = useAppContext();
   let router = useRouter();
   //Register
-  // console.log(state);
-  // console.log(state.id);
-  const onSubmitVerification = useCallback(async () => {
+
+  const onSubmitVerification = useCallback(async (): Promise<void> => {
     if (!email || !name || !password) return;
     try {
       let response = await Verification({ name, email, password });
@@ -59,10 +58,7 @@ export default function Register() {
           placeholder="نام"
           label="نام"
           value={name}
-          // setValue={setName}
-          onChange={(event: { target: { value: SetStateAction<string> } }) =>
-            setName(event.target.value)
-          }
+          onChange={(event) => setName(event.target.value)}
           style={{ width: "80%" }}
           type="text"
           width="100%"
@@ -71,10 +67,7 @@ export default function Register() {
           placeholder="example@gmail.com"
           label="آدرس ایمیل"
           value={email}
-          // setValue={setEmail}
-          onChange={(event: { target: { value: SetStateAction<string> } }) =>
-            setEmail(event.target.value)
-          }
+          onChange={(event) => setEmail(event.target.value)}
           style={{ width: "80%" }}
           type="text"
           width="100%"
@@ -82,9 +75,7 @@ export default function Register() {
         <CustomInput
           label="رمز عبور"
           value={password}
-          onChange={(event: { target: { value: SetStateAction<string> } }) =>
-            setPassword(event.target.value)
-          }
+          onChange={(event) => setPassword(event.target.value)}
           style={{ width: "80%" }}
           type="password"
         />

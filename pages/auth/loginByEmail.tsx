@@ -30,26 +30,9 @@ export default function LoginByEmail() {
     password: string;
   }
 
-  const validate = (values: any) => {
-    const errors: MyFormValues = { email: "", password: "" };
-    if (!values.email) {
-      errors.email = "required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
-    }
-
-    if (!values.password) {
-      errors.password = "required";
-    } else if (values.password.length < 3) {
-      errors.password = "";
-    }
-  };
-
   //send by email
 
-  const onSubmitEmail = useCallback(async () => {
+  const onSubmitEmail = useCallback(async (): Promise<void> => {
     if (email.length === 0 || password.length === 0) {
       setError("تمامی فیلد ها ضروری است");
     }
@@ -91,11 +74,8 @@ export default function LoginByEmail() {
         placeholder="example@gmail.com"
         label="آدرس ایمیل"
         value={email}
-        onChange={(event: { target: { value: SetStateAction<string> } }) =>
-          setEmail(event.target.value)
-        }
+        onChange={(event) => setEmail(event.target.value)}
         width="100%"
-        // style={{ width: "80%" }}
         type="text"
       />
       {/* <ErrorText>{error}</ErrorText> */}
@@ -103,11 +83,8 @@ export default function LoginByEmail() {
       <CustomInput
         label="رمز عبور"
         value={password}
-        onChange={(event: { target: { value: SetStateAction<string> } }) =>
-          setPassword(event.target.value)
-        }
+        onChange={(event) => setPassword(event.target.value)}
         width="100%"
-        // style={{ width: "80%" }}
         onSubmit={onSubmitEmail}
         type="password"
       />
@@ -115,7 +92,6 @@ export default function LoginByEmail() {
       <CustomButton
         onClick={onSubmitEmail}
         width="100%"
-        // maxWidth="80%"
         label={""}
         style={{ justifyContent: "center" }}
         disable={loading}

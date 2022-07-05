@@ -31,8 +31,8 @@ export default function Profile(): JSX.Element {
   const { state, dispatch } = useAppContext();
   const { token }: any = state?.userInfo;
   const { query } = useRouter();
-  const { slug }: any = query;
-  const { id }: any = query;
+  const slug: string | string[] | undefined = query.slug;
+  const id: any = query.id;
   // console.log(id, token);
   const [loading, setloading] = useState(false);
   let t = useTheme();
@@ -98,9 +98,9 @@ export default function Profile(): JSX.Element {
         label="پسورد"
         placeholder=" پسورد ..."
         value={profileValue.password}
-        onChange={(e) =>
-          setProfileValue({ ...profileValue, password: e.target.value })
-        }
+        onChange={(e) => {
+          setProfileValue({ ...profileValue, password: e.currentTarget.value });
+        }}
       />
       <CustomInput
         type="password"
@@ -108,7 +108,10 @@ export default function Profile(): JSX.Element {
         placeholder="پسورد جدید ..."
         value={profileValue.newpassword}
         onChange={(e) =>
-          setProfileValue({ ...profileValue, newpassword: e.target.value })
+          setProfileValue({
+            ...profileValue,
+            newpassword: e.target.value,
+          })
         }
       />
       <CustomInput
@@ -117,7 +120,10 @@ export default function Profile(): JSX.Element {
         placeholder=" تکرار پسورد جدید ..."
         value={profileValue.Renewpassword}
         onChange={(e) =>
-          setProfileValue({ ...profileValue, Renewpassword: e.target.value })
+          setProfileValue({
+            ...profileValue,
+            Renewpassword: e.currentTarget.value,
+          })
         }
       />
       <CustomInput
@@ -126,7 +132,7 @@ export default function Profile(): JSX.Element {
         placeholder="مهارت و شغل شما ..."
         value={profileValue.bio}
         onChange={(e) =>
-          setProfileValue({ ...profileValue, bio: e.target.value })
+          setProfileValue({ ...profileValue, bio: e.currentTarget.value })
         }
       />
       <CustomInput
