@@ -1,10 +1,33 @@
-import React, { useState } from "react";
+import React, {
+  ChangeEvent,
+  DetailedHTMLProps,
+  TextareaHTMLAttributes,
+  useState,
+} from "react";
 import styled, { css } from "styled-components";
 import { useTheme } from "./Context/ThemeContext";
 import { FormItem } from "./share/Container";
 import { Space } from "./share/Space";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-export type Props = {
+
+interface TextInput {
+  type: "text";
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+interface FileInput {
+  type: "file";
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+interface TextArea {
+  type: "textarea";
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+}
+interface TextPassword {
+  type: "password";
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export type InputCommonProps = {
   label?: string;
   placeholder?: string;
   value?: string;
@@ -12,15 +35,21 @@ export type Props = {
   height?: string;
   enctype?: string | undefined;
   name?: string;
-  // setValue: (value: string) => void;
-  // onChange?: (value?: string | number) => void;
   style?: any;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onSubmit?: (() => void) | undefined;
-  type?: any;
+  type?: string;
 };
 
-export const CustomInput = ({
+type Props = (TextInput | TextArea | FileInput | TextPassword) &
+  InputCommonProps;
+
+interface ImgProps {
+  password?: boolean;
+  onClick: () => void;
+}
+
+export const CustomInput: React.FC<Props> = ({
   label,
   placeholder,
   value,
@@ -28,21 +57,19 @@ export const CustomInput = ({
   name,
   height,
   enctype,
-  // setValue,
   onChange,
   style,
   onSubmit,
   type,
-
-  ...props
-}: Props) => {
+}) => {
   const [show, setShow] = useState(false);
+
   let t = useTheme();
 
   return (
     <FormItem
-      method="pots"
-      enctype={enctype}
+      // method="posts"
+      // enctype={enctype}
       style={{
         margin: t.margin.medium,
         width: width,
@@ -53,7 +80,6 @@ export const CustomInput = ({
       {label && (
         <>
           <label style={{ color: t.color.labelColor }}>{label}</label>
-          {/* <Space vertical={10} /> */}
         </>
       )}
       {type === "password" && (
@@ -63,11 +89,6 @@ export const CustomInput = ({
           type={show ? "text" : "password"}
           placeholder={placeholder}
           style={{ padding: t.padding.normal, height: t.height.small }}
-          // onKeyDown={(e) => {
-          //   if (e.key === "Enter") {
-          //     onSubmit();
-          //   }
-          // }}
         />
       )}
       {!(type === "password" || type === "textarea") && (
@@ -78,14 +99,8 @@ export const CustomInput = ({
           type={type}
           placeholder={placeholder}
           style={{ padding: t.padding.normal, height: t.height.small }}
-          // onKeyDown={(e) => {
-          //   if (e.key === "Enter") {
-          //     onSubmit();
-          //   }
-          // }}
         />
       )}
-      {/* <Space vertical={10} /> */}
 
       {type === "textarea" && (
         <textarea
@@ -127,7 +142,7 @@ export const Input = styled.input`
   }
 `;
 
-const ShowPass = styled.div`
+const ShowPass = styled.div<ImgProps>`
   width: 40px;
   height: 40px;
   position: absolute;
