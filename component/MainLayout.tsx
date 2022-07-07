@@ -10,7 +10,7 @@ export default function MainLayout({
 }: {
   children: ReactNode;
   title: string;
-}) {
+}): JSX.Element {
   let t = useTheme();
   return (
     <Wrapper>

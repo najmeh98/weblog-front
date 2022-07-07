@@ -11,7 +11,7 @@ import { ErrorText } from "../../component/ErrorText";
 import { HelpText } from "../../component/HelpText";
 import Layout from "../../component/Layout";
 
-export default function LoginByEmail() {
+export default function LoginByEmail(): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isVerification, setVerification] = useState(false);

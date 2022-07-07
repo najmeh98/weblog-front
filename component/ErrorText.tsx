@@ -2,7 +2,11 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 import { useTheme } from "./Context/ThemeContext";
 
-export const ErrorText = ({ children }: { children: ReactNode }) => {
+export const ErrorText = ({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element => {
   let t = useTheme();
   return (
     <Text

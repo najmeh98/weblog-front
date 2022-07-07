@@ -14,7 +14,7 @@ export default function Layout({
   title: string;
   textHelp: string;
   path: string;
-}) {
+}): JSX.Element {
   let t = useTheme();
   let router = useRouter();
   return (

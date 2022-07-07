@@ -13,14 +13,14 @@ export const ThemedText = ({
   onClick,
 }: {
   children: ReactNode;
-  lineHeight?: number;
+  lineHeight?: number | undefined;
   fontSize?: keyof Theme["fontSize"];
   fontWeight?: keyof Theme["fontWeight"];
   color?: keyof Theme["color"];
-  opacity?: number;
+  opacity?: number | undefined;
   style?: any;
-  onClick?: () => void;
-}) => {
+  onClick?: (() => void) | undefined;
+}): JSX.Element => {
   const t = useTheme();
   return (
     <h1

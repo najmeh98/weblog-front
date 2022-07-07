@@ -8,7 +8,7 @@ import { CustomInput } from "../../component/CustomInput";
 import { HelpText } from "../../component/HelpText";
 import Layout from "../../component/Layout";
 
-export default function Register() {
+export default function Register(): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");

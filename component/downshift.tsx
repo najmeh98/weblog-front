@@ -18,7 +18,7 @@ export const Item = ({
   selectedItem,
   filterHandler,
   setSelectedItem,
-}: filterItem) => {
+}: filterItem): JSX.Element => {
   const {
     isOpen,
     // selectedItem,

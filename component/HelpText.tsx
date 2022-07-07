@@ -8,7 +8,7 @@ export const HelpText = ({
 }: {
   children: ReactNode;
   onClick: () => void;
-}) => {
+}): JSX.Element => {
   let t = useTheme();
   return (
     <Text
