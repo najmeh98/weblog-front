@@ -3,7 +3,7 @@ import { Theme } from "../types/theme";
 import { useTheme } from "./Context/ThemeContext";
 import { Wrapper } from "./share/Container";
 
-type Props = {
+type OwnProps = {
   onClick: () => void;
   label?: string;
   style?: any;
@@ -26,7 +26,7 @@ export const CustomButton = ({
   padding,
   maxWidth,
   color,
-}: Props) => {
+}: OwnProps) => {
   let t = useTheme();
   return (
     <Row style={{ margin: t.margin.medium, ...style }}>
@@ -54,7 +54,6 @@ export const CustomButton = ({
 const Row = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: ${(p) => (p.bordered ? "flex-end" : "center")}; */
   width: 100%;
   height: 65px;
 `;

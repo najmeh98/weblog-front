@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useTheme } from "./Context/ThemeContext";
-import { Props } from "./CustomInput";
+import { InputCommonProps } from "./CustomInput";
 import { FormItem } from "./share/Container";
 import { Space } from "./share/Space";
 
@@ -11,7 +11,7 @@ export const CustomFileInput = ({
   enctype,
   placeholder,
   name,
-}: Props) => {
+}: InputCommonProps) => {
   let t = useTheme();
 
   return (

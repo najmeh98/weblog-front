@@ -1,3 +1,4 @@
+import { FocusEventHandler } from "react";
 import { useTheme } from "./Context/ThemeContext";
 import { Input } from "./CustomInput";
 import { Space } from "./share/Space";
@@ -7,11 +8,9 @@ type Props = {
   value?: string;
   width?: string;
   height?: string;
-  // setValue: (value: string) => void;
-  // onChange?: (value?: string | number) => void;
   style?: any;
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  onSubmit?: (() => void) | undefined;
+  onSubmit?: FocusEventHandler<HTMLInputElement> | undefined;
   type?: any;
 };
 export const CustomInputText = ({
@@ -20,7 +19,8 @@ export const CustomInputText = ({
   onChange,
   type,
   placeholder,
-}: Props) => {
+  onSubmit,
+}: Props): JSX.Element => {
   let t = useTheme();
 
   return (
@@ -38,11 +38,11 @@ export const CustomInputText = ({
           type={type}
           placeholder={placeholder}
           style={{ padding: t.padding.normal, height: t.height.small }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onSubmit();
-            }
-          }}
+          // onKeyDown={(e) => {
+          //   if (e.key === "Enter") {
+          //     onSubmit();
+          //   }
+          // }}
         />
       }
     </div>
