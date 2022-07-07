@@ -1,15 +1,19 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { SetStateAction, useCallback, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
-import { config, createPost } from "../../component/Api";
+import { config } from "../../component/Api";
 import { useAppContext } from "../../component/AppContext";
 import { useTheme } from "../../component/Context/ThemeContext";
 import { CustomButton } from "../../component/CustomButton";
 import { CustomDropdown } from "../../component/CustomDropdown";
-import { CustomFileInput } from "../../component/CustomFileInput";
 import { CustomInput } from "../../component/CustomInput";
-import { CustomInputText } from "../../component/CustomInputText";
 import { Category, Post } from "../../component/definition";
 import Layout, { Box } from "../../component/Layout";
 import MainLayout from "../../component/MainLayout";
@@ -17,18 +21,13 @@ import { ButtonStyle } from "../../component/share/Container";
 import { Space } from "../../component/share/Space";
 import { ThemedText } from "../../component/ThemedText";
 
-export default function AddPost() {
+export default function AddPost(): JSX.Element {
   let router = useRouter();
   let t = useTheme();
   let { state, dispatch } = useAppContext();
 
   const { token }: any = state.userInfo;
 
-  // const [title, setTitle] = useState<string>("");
-  // const [content, setContent] = useState<string>("");
-  // const [fileName, setFileName] = useState<string>("Choose File");
-  // const [file, setFile] = useState<string>("");
-  // const [category, setCategory] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -39,18 +38,14 @@ export default function AddPost() {
     file: "",
   });
 
-  const uploadImageHandler = (e: {
-    target: { files: React.SetStateAction<string>[] };
-  }) => {
-    console.log(e.target.files[0]);
-    if (e.target && e.target.files) {
-      let File = e.target.files[0];
-      setFormData({ ...formData, file: e.target.files[0] });
-      // setFile(e.target.files[0]);
-      console.log("file:", file);
+  const uploadImageHandler = (event: any): void => {
+    const target = event.target as HTMLInputElement;
+    if (!target || !target.files || !target.files[0]) {
+      return;
     }
+    setFormData({ ...formData, file: event.target.files[0] });
   };
-  const CreatePostHandler = useCallback(async () => {
+  const CreatePostHandler = useCallback(async (): Promise<void> => {
     if (!formData.title || !formData.content) {
       setError("All fields are required");
       return;
@@ -58,14 +53,10 @@ export default function AddPost() {
 
     setLoading(true);
 
-    // از FormData  استفاده کردم *********
-    //در هر صورت file ارسال نمیشه
     const datapost = new FormData();
     datapost.append("title", formData.title);
     datapost.append("content", formData.content);
     datapost.append("file", formData.file);
-
-    //router --> /add فقط برای تست
 
     console.log(datapost);
     axios
@@ -94,7 +85,7 @@ export default function AddPost() {
         placeholder="عنوان..."
         type="text"
         value={formData.title}
-        onChange={(event: { target: { value: SetStateAction<string> } }) => {
+        onChange={(event) => {
           setFormData({ ...formData, title: event.target.value });
         }}
       />
