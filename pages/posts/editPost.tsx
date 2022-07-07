@@ -18,7 +18,7 @@ type editFormValueType = {
   file: string;
 };
 
-export default function EditPost() {
+export default function EditPost(): JSX.Element {
   let t = useTheme();
   let router = useRouter();
   const id = router.query.id;
@@ -28,38 +28,49 @@ export default function EditPost() {
 
   const posts: any = state.posts;
   const { token }: any = state.userInfo;
+
   console.log(token);
   console.log(state);
   console.log(posts);
+
   let index = posts.findIndex((post: any) => post.id == id);
   let filterpost = posts.filter((post: any) => post.id == id);
+
   console.log(filterpost);
   let post: any = posts[index];
-  console.log(posts[index]);
+
   const [formValue, setFormValue] = useState<editFormValueType>({
     title: post?.title || "",
     content: post?.content || "",
     file: post?.file || "",
   });
+
   const [loading, setloading] = useState(false);
 
   // useEffect(() => {
   //   setFormValue({ title: post.title, content: post.content, file: post.file });
   // }, [post.content, post.file, post.title]);
 
-  const uploadEditImage = (e: { target: { files: any[] } }) => {
-    if (e.target && e.target.files[0]) {
-      setFormValue({ ...formValue, file: e.target.files[0] });
+  const uploadEditImage = (event: any): void => {
+    const target = event.target as HTMLInputElement;
+
+    if (!target || !target.files) {
+      return;
     }
+    setFormValue({ ...formValue, file: event.target.files[0] });
   };
+
   console.log("info", formValue.title, formValue.content, formValue.file);
+
   const EditInfoPost = () => {
     const formdata = new FormData();
     formdata.append("title", formValue.title);
     formdata.append("content", formValue.content);
     formdata.append("file", formValue.file);
     console.log("info", formValue.title, formValue.content, formValue.file);
+
     setloading(true);
+
     axios
       .post(`${config.apiUrl}/api/data/editPost/${id}`, formdata, {
         headers: {
@@ -108,7 +119,6 @@ export default function EditPost() {
         label="انتخاب تصویر"
         type="file"
         enctype="multipart/form-data"
-        // value={formValue.file}
         onChange={uploadEditImage}
       />
       <Space vertical={15} />
