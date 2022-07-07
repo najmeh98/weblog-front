@@ -17,7 +17,7 @@ import {
 } from "../../component/utils/media";
 import { fetcher } from "../../utils/fetcher";
 
-export default function PostInfo() {
+export default function PostInfo(): JSX.Element {
   let t = useTheme();
   const { query }: any = useRouter();
   const { state, dispatch } = useAppContext();
@@ -73,9 +73,8 @@ export default function PostInfo() {
             )}
           </BoxContainer>
           {/* </PostContainer> */}
-          <BoxContainer style={{ maxWidth: "400px" }}> 
-         <p>‌درباه نویسنده</p>
-
+          <BoxContainer style={{ maxWidth: "400px" }}>
+            <p>‌درباه نویسنده</p>
           </BoxContainer>
         </PostWrapper>
       </Wrapper>

@@ -22,7 +22,7 @@ interface State {
   fullName: string;
   token: string;
 }
-export default function Posts() {
+export default function Posts(): JSX.Element {
   const { state, dispatch } = useAppContext();
   const [postItem, setPostItem] = useState<any | undefined>([]);
   const { id, fullName, token }: State = state.userInfo;
