@@ -8,6 +8,6 @@ const initialValue: ContextType = lightTheme;
 
 export const ThemeContext = React.createContext<ContextType>(initialValue);
 
-export const useTheme = () => {
+export const useTheme = (): Theme => {
   return useContext(ThemeContext);
 };
