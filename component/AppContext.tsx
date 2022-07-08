@@ -9,66 +9,44 @@ import React, {
 } from "react";
 import { config } from "./Api";
 import { Post, Prop } from "./definition";
+
 type State = {
-  // id?: number;
   isLoggedIn: boolean | undefined;
   userInfo: Prop;
   posts: Post[];
-  // token: string | undefined;
-  // email: string | undefined;
-  // value: Prop;
-
-  // title: string | undefined;
-  // content: string | undefined;
-  // file: any;
-  // category: string | undefined;
 };
 
 const initialState: State = {
-  // id: undefined,
   isLoggedIn: false,
   userInfo: { email: "", fullName: "", token: "", id: undefined },
   posts: [],
-  // token: undefined,
-  // email: undefined,
-  // email: undefined,
-  // title: undefined,
-  // content: undefined,
-  // file: undefined,
-  // category: undefined,
 };
 
 type ContextType = State & {
-  login: ({}) => void;
+  login: (prop: Prop) => void;
   logout: () => void;
   dispatch: React.Dispatch<Action>;
-  state: any;
 };
 
 const initialValue: ContextType = {
   ...initialState,
-  login: ({}) => {},
+  login: async (prop: Prop) => {},
   logout: () => {},
   dispatch: () => {},
 };
 
 export const AppContext = createContext<ContextType>(initialValue);
 
-export const AppmanagerContext = (
-  // props: any,
-  {
-    children,
-  }: {
-    children: React.ReactNode;
-  }
-) => {
-  //@ts-ignore
+export const AppmanagerContext = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element => {
   const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
+
   useEffect(() => {
     console.log(state);
   }, [state]);
-
-  const { isLoggedIn } = state;
 
   useEffect(() => {
     const token: any = localStorage.getItem("token");
@@ -80,15 +58,14 @@ export const AppmanagerContext = (
     if (!localEmail || typeof localEmail === "undefined") {
       return;
     }
-    //@ts-ignore
     dispatch({
       type: "logged in",
       token: token,
     });
   }, []);
 
-  const handleReload = useCallback(() => {
-    const token = localStorage.getItem("token");
+  const handleReload = useCallback((): void => {
+    const token: any = localStorage.getItem("token");
     const localEmail: any = localStorage.getItem("email");
 
     axios
@@ -107,12 +84,10 @@ export const AppmanagerContext = (
         if ((result.status as number) == 200) {
           const Userdata = result?.data.user;
           const Userpost = result?.data?.post;
-          //@ts-ignore
           dispatch({
             type: "initial data",
             payload: Userpost,
           });
-          //@ts-ignore
           dispatch({ type: "logged in", payload: Userdata });
         }
       })
@@ -129,18 +104,16 @@ export const AppmanagerContext = (
     console.log(email);
     localStorage.setItem("token", token);
     localStorage.setItem("email", email);
-    //@ts-ignore
     dispatch({ type: "logged in", payload: { ...prop } });
   }, []);
 
   const logout = useCallback(() => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
-    //@ts-ignore
-    dispatch({
-      type: "logged out",
-      payload: { email: undefined, token: undefined },
-    });
+    // dispatch({
+    //   type: "logged out",
+    //   payload: { email: undefined, token: undefined },
+    // });
   }, []);
 
   const contextvalue = useMemo(
@@ -190,9 +163,6 @@ function reducer(state: State, action: Action) {
       return { ...action.payload, isLoggedIn: false };
       break;
     case "post created":
-      // const newPost: any = [state.posts];
-      // newPost.push(action.payload.data);
-      // state.posts = newPost;
       const updatepost = [...state.posts, { ...action.payload }];
       console.log({
         ...state,
