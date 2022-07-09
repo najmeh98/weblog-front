@@ -14,7 +14,7 @@ export default function Register(): JSX.Element {
   const [name, setName] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const { login: loggedIn, dispatch, state } = useAppContext();
+  const { login: loggedIn } = useAppContext();
   let router = useRouter();
   //Register
 
@@ -29,7 +29,6 @@ export default function Register(): JSX.Element {
       if (token && status) {
         // Ok 200
         loggedIn({ ...response?.data.user });
-        console.log(state);
         router.push("/");
       }
     } catch (error) {
@@ -45,7 +44,7 @@ export default function Register(): JSX.Element {
         }
       }
     }
-  }, [email, loggedIn, name, password, router, state]);
+  }, [email, loggedIn, name, password, router]);
 
   return (
     <>

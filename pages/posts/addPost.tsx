@@ -31,7 +31,6 @@ export default function AddPost(): JSX.Element {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //  از state استفاده  کردم ******
   const [formData, setFormData] = useState({
     title: "",
     content: "",
