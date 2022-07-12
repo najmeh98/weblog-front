@@ -40,7 +40,7 @@ export default function LoginByEmail(): JSX.Element {
     try {
       setLoading(true);
       setVerification(true);
-      //@ts-ignore
+
       let res = await Login({ email, password });
       setLoading(false);
       console.log(res);
