@@ -1,6 +1,10 @@
 import axios from "axios";
 import React, {
+  ConsumerProps,
   createContext,
+  ExoticComponent,
+  ProviderExoticComponent,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -34,8 +38,19 @@ const initialValue: ContextType = {
   logout: () => {},
   dispatch: () => {},
 };
+interface ProviderProps<T> {
+  value: T;
+  children?: ReactNode | undefined;
+}
+// type Provider<T> = ProviderExoticComponent<ProviderProps<T>>;
+// type Consumer<T> = ExoticComponent<ConsumerProps<T>>;
+// interface Context<T> {
+//     Provider: Provider<T>;
+//     Consumer: Consumer<T>;
+//     displayName?: string | undefined;
+// }
 
-export const AppContext: React.Context<ContextType> =
+export const AppContext: React.Context<ProviderProps> =
   createContext<ContextType>(initialValue);
 
 export const AppmanagerContext = ({
@@ -43,7 +58,7 @@ export const AppmanagerContext = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => {
-  // const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
+  // const [state, dispatch] = useReducer<React.Reducer<State, Action>>(reducer, initialState);
 
   const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
     reducer,
@@ -102,6 +117,8 @@ export const AppmanagerContext = ({
             payload: Userpost,
           });
           dispatch({ type: "logged in", payload: Userdata });
+        } else {
+          dispatch({ type: "logged out" });
         }
       })
       .catch((err) => console.log(err));
