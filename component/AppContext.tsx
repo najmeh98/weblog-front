@@ -54,26 +54,33 @@ export const AppmanagerContext = ({
     console.log(state);
   }, [state]);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const token: any = localStorage.getItem("token");
+  //   const localEmail: any = localStorage.getItem("email");
+  //   console.log("token:", token);
+  //   if (!token || typeof token === "undefined") {
+  //     return;
+  //   }
+  //   if (!localEmail || typeof localEmail === "undefined") {
+  //     return;
+  //   }
+  //   dispatch({
+  //     type: "logged in",
+  //     payload: {},
+  //   });
+  // }, []);
+
+  // roload page
+
+  const handleReload = useCallback((): void => {
     const token: any = localStorage.getItem("token");
     const localEmail: any = localStorage.getItem("email");
-    console.log("token:", token);
     if (!token || typeof token === "undefined") {
       return;
     }
     if (!localEmail || typeof localEmail === "undefined") {
       return;
     }
-    // dispatch({
-    //   type: "logged in",
-    //   token: token,
-    // });
-  }, []);
-
-  const handleReload = useCallback((): void => {
-    const token: any = localStorage.getItem("token");
-    const localEmail: any = localStorage.getItem("email");
-
     axios
       .post(
         `${config.apiUrl}/api/data/userValid`,
@@ -116,10 +123,10 @@ export const AppmanagerContext = ({
   const logout = useCallback((): void => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
-    // dispatch({
-    //   type: "logged out",
-    //   payload: { email: undefined, token: undefined },
-    // });
+    dispatch({
+      type: "logged out",
+      payload: { email: undefined, token: undefined },
+    });
   }, []);
 
   const contextvalue = useMemo(
@@ -132,12 +139,12 @@ export const AppmanagerContext = ({
     [login, logout, state]
   );
 
-  const value = {
-    login,
-    logout,
-    dispatch,
-    state,
-  };
+  // const value = {
+  //   login,
+  //   logout,
+  //   dispatch,
+  //   state,
+  // };
 
   return (
     <AppContext.Provider
