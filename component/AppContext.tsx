@@ -10,11 +10,11 @@ import React, {
 import { config } from "./Api";
 import { Post, Prop } from "./definition";
 
-type State = {
+interface State {
   isLoggedIn: boolean | undefined;
   userInfo: Prop;
   posts: Post[];
-};
+}
 
 const initialState: State = {
   isLoggedIn: false,
@@ -25,7 +25,7 @@ const initialState: State = {
 type ContextType = State & {
   login: (prop: Prop) => void;
   logout: () => void;
-  dispatch: React.Dispatch<Action>;
+  dispatch: (value: Action) => void;
 };
 
 const initialValue: ContextType = {
@@ -35,14 +35,20 @@ const initialValue: ContextType = {
   dispatch: () => {},
 };
 
-export const AppContext = createContext<ContextType>(initialValue);
+export const AppContext: React.Context<ContextType> =
+  createContext<ContextType>(initialValue);
 
 export const AppmanagerContext = ({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element => {
-  const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
+  // const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
+
+  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
     console.log(state);
@@ -58,10 +64,10 @@ export const AppmanagerContext = ({
     if (!localEmail || typeof localEmail === "undefined") {
       return;
     }
-    dispatch({
-      type: "logged in",
-      token: token,
-    });
+    // dispatch({
+    //   type: "logged in",
+    //   token: token,
+    // });
   }, []);
 
   const handleReload = useCallback((): void => {
@@ -98,7 +104,7 @@ export const AppmanagerContext = ({
     handleReload();
   }, [handleReload]);
 
-  const login = useCallback((prop: Prop) => {
+  const login = useCallback((prop: Prop): void => {
     console.log(prop);
     let { token, email } = prop;
     console.log(email);
@@ -107,7 +113,7 @@ export const AppmanagerContext = ({
     dispatch({ type: "logged in", payload: { ...prop } });
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback((): void => {
     localStorage.removeItem("email");
     localStorage.removeItem("token");
     // dispatch({
@@ -126,8 +132,22 @@ export const AppmanagerContext = ({
     [login, logout, state]
   );
 
+  const value = {
+    login,
+    logout,
+    dispatch,
+    state,
+  };
+
   return (
-    <AppContext.Provider value={{ login, logout, dispatch, state }}>
+    <AppContext.Provider
+      value={{
+        login,
+        logout,
+        dispatch,
+        state,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
@@ -147,7 +167,7 @@ type Action =
   | { type: "post deleted"; payload: any }
   | { type: "post edited"; payload: Post };
 
-function reducer(state: State, action: Action) {
+function reducer<T>(state: State = initialState, action: Action): State {
   switch (action.type) {
     case "logged in":
       return {
@@ -156,11 +176,12 @@ function reducer(state: State, action: Action) {
         userInfo: {
           ...action.payload,
         },
+
         // isLoggedIn: action.isLoggedIn,
       };
       break;
     case "logged out":
-      return { ...action.payload, isLoggedIn: false };
+      return { ...state, ...action.payload, isLoggedIn: false };
       break;
     case "post created":
       const updatepost = [...state.posts, { ...action.payload }];
@@ -201,6 +222,7 @@ function reducer(state: State, action: Action) {
 
       return {
         ...state,
+        isLoggedIn: true,
         posts: editPost,
       };
       break;
