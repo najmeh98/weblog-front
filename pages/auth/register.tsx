@@ -23,10 +23,10 @@ export default function Register(): JSX.Element {
     try {
       let response = await Verification({ name, email, password });
       console.log(response);
-      const { status }: { status: number } = response?.data || {};
+      const status: number | undefined = response?.status;
       const { token }: { token: string } = response?.data?.user || {};
 
-      if (token && status) {
+      if (status == 200 && token) {
         // Ok 200
         loggedIn({ ...response?.data.user });
         router.push("/");
