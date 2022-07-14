@@ -29,6 +29,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
-function useAppManager() {
-  throw new Error("Function not implemented.");
-}
