@@ -36,7 +36,8 @@ export const CustomFileInput = ({
 export const Input = styled.input`
   outline: none;
   border: 1px solid rgb(204, 204, 204);
-  direction: rtl !important;
+  direction: ltr !important;
+
   display: flex;
   text-align: right;
   border-radius: 5px;

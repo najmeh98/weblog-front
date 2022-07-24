@@ -129,11 +129,11 @@ export const CustomInput: React.FC<Props> = ({
 export const Input = styled.input`
   outline: none;
   border: 1px solid rgb(204, 204, 204);
-  direction: rtl !important;
+  direction: ltr !important;
   display: flex;
-  text-align: right;
+  text-align: left;
   border-radius: 5px;
-  width: 100%;
+  /* width: 100%; */
   margin-bottom: 10px;
   margin-top: 10px;
   resize: none;
@@ -146,14 +146,14 @@ const ShowPass = styled.div<ImgProps>`
   width: 40px;
   height: 40px;
   position: absolute;
-  left: 0px;
+  right: 0px;
   top: -50px;
 
   cursor: pointer;
   ${(p) =>
     p.password &&
     css`
-      border-right: 1px solid rgb(204, 204, 204);
+      border-left: 1px solid rgb(204, 204, 204);
       cursor: pointer;
     `}
   svg {

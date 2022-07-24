@@ -68,5 +68,5 @@ export const StyleButton = styled.div`
   /* align-items: flex-start; */
   justify-content: flex-start;
 
-  direction: rtl;
+  direction: ltr;
 `;
