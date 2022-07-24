@@ -15,7 +15,6 @@ import { CustomButton } from "../../component/CustomButton";
 import { CustomDropdown } from "../../component/CustomDropdown";
 import { CustomInput } from "../../component/CustomInput";
 import { Category, Post } from "../../component/definition";
-import Layout, { Box } from "../../component/Layout";
 import MainLayout from "../../component/MainLayout";
 import { ButtonStyle } from "../../component/share/Container";
 import { Space } from "../../component/share/Space";

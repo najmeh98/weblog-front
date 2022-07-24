@@ -4,7 +4,6 @@ import useSWR from "swr";
 import { config } from "../../component/Api";
 import { useAppContext } from "../../component/AppContext";
 import { useTheme } from "../../component/Context/ThemeContext";
-import Layout from "../../component/Layout";
 import MainLayout from "../../component/MainLayout";
 import { BoxContainer } from "../../component/share/BoxContainer";
 import { SidebarOption } from "../../component/Sidebar/SidebarOption";
