@@ -19,9 +19,9 @@ import { fetcher } from "../../utils/fetcher";
 export default function PostInfo(): JSX.Element {
   let t = useTheme();
   const { query }: any = useRouter();
-  const { state } = useAppContext();
+  const { userInfo } = useAppContext();
   const { id, slug }: any = query;
-  const { token }: any = state.userInfo;
+  const token: string = userInfo?.token;
   console.log(id, slug);
 
   const { data, error } = useSWR(

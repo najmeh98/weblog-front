@@ -24,20 +24,17 @@ export default function EditPost(): JSX.Element {
   const id = router.query.id;
 
   // AppContext
-  const { state, dispatch } = useAppContext();
+  const { dispatch, posts, userInfo } = useAppContext();
 
-  const posts: any = state.posts;
-  const { token }: any = state.userInfo;
+  const token: string = userInfo?.token;
 
   console.log(token);
-  console.log(state);
   console.log(posts);
 
-  let index = posts.findIndex((post: any) => post.id == id);
-  let filterpost = posts.filter((post: any) => post.id == id);
+  const index = posts.findIndex((post: any) => post.id == id);
+  // let filterpost = posts.filter((post: any) => post.id == id);
 
-  console.log(filterpost);
-  let post: any = posts[index];
+  const post: any = posts[index];
 
   const [formValue, setFormValue] = useState<editFormValueType>({
     title: post?.title || "",

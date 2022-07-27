@@ -44,11 +44,12 @@ export default function LoginByEmail(): JSX.Element {
       let res = await Login({ email, password });
       setLoading(false);
       console.log(res);
+      setVerification(false);
 
-      const token: string = res?.data.token || {};
-      const status: string = res?.data || {};
+      const token: string = res?.data?.user?.token || {};
+      const status: any = res?.status || {};
 
-      if (token && status) {
+      if (token && status == 200) {
         CheckLoggedIn({ ...res?.data.user });
         dispatch({
           type: "logged in",
@@ -57,6 +58,7 @@ export default function LoginByEmail(): JSX.Element {
         });
 
         router.push("/");
+        console.log(res);
       }
     } catch (error) {
       console.log(error);
@@ -66,13 +68,14 @@ export default function LoginByEmail(): JSX.Element {
 
   return (
     <Layout
-      title="ورود"
-      textHelp="حساب کاربری ندارید؟ ثبت نام"
+      title="Log in"
+      link="Join us"
+      textHelp="Don't have account yet?"
       path="/auth/register"
     >
       <CustomInput
         placeholder="example@gmail.com"
-        label="آدرس ایمیل"
+        label="email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         width="100%"
@@ -81,7 +84,7 @@ export default function LoginByEmail(): JSX.Element {
       {/* <ErrorText>{error}</ErrorText> */}
 
       <CustomInput
-        label="رمز عبور"
+        label="password"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         width="100%"
@@ -94,9 +97,9 @@ export default function LoginByEmail(): JSX.Element {
         width="100%"
         label={""}
         style={{ justifyContent: "center" }}
-        disable={loading}
+        // disable={loading}
       >
-        {isVerification ? "در حال تایید" : "ورود"}
+        {isVerification ? "Verifying ..." : "Login"}
       </CustomButton>
     </Layout>
   );

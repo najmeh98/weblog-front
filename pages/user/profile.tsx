@@ -28,12 +28,16 @@ const initialValues = {
 };
 
 export default function Profile(): JSX.Element {
-  const { state, dispatch } = useAppContext();
-  const { token }: any = state?.userInfo;
+  const { userInfo, dispatch } = useAppContext();
+
+  const token: string = userInfo?.token;
+
   const { query } = useRouter();
+
   const slug: string | string[] | undefined = query.slug;
+
   const id: any = query.id;
-  // console.log(id, token);
+
   const [loading, setloading] = useState(false);
   let t = useTheme();
 
@@ -91,12 +95,12 @@ export default function Profile(): JSX.Element {
   };
 
   return (
-    <MainLayout title="تنظیم پروفایل ">
+    <MainLayout title="Profile">
       <Space vertical={10} />
       <CustomInput
         type="password"
-        label="پسورد"
-        placeholder=" پسورد ..."
+        label="password"
+        placeholder="password..."
         value={profileValue.password}
         onChange={(e) => {
           setProfileValue({ ...profileValue, password: e.currentTarget.value });
@@ -104,8 +108,8 @@ export default function Profile(): JSX.Element {
       />
       <CustomInput
         type="password"
-        label="پسورد جدید "
-        placeholder="پسورد جدید ..."
+        label="new password "
+        placeholder="new password ..."
         value={profileValue.newpassword}
         onChange={(e) =>
           setProfileValue({
@@ -116,8 +120,8 @@ export default function Profile(): JSX.Element {
       />
       <CustomInput
         type="password"
-        label="تکرار پسورد جدید "
-        placeholder=" تکرار پسورد جدید ..."
+        label="repeat the new password"
+        placeholder="repeat the new password ..."
         value={profileValue.Renewpassword}
         onChange={(e) =>
           setProfileValue({
@@ -128,17 +132,18 @@ export default function Profile(): JSX.Element {
       />
       <CustomInput
         type="text"
-        label=" مهارت و شغل شما "
-        placeholder="مهارت و شغل شما ..."
+        label=" skill "
+        placeholder="skill ..."
         value={profileValue.bio}
         onChange={(e) =>
           setProfileValue({ ...profileValue, bio: e.currentTarget.value })
         }
       />
+
       <CustomInput
         type="textarea"
-        label="بیوگرافی شما"
-        placeholder="بیوگرافی شما ..."
+        label="biography"
+        placeholder="biography ..."
         value={profileValue.skill}
         onChange={(e) =>
           setProfileValue({ ...profileValue, skill: e.target.value })
@@ -153,7 +158,7 @@ export default function Profile(): JSX.Element {
           color="errortext"
           onClick={() => router.push("/posts")}
         >
-          انصراف
+          Cancel
         </CustomButton>
 
         <CustomButton
@@ -161,7 +166,7 @@ export default function Profile(): JSX.Element {
           style={{ justifyContent: "center" }}
           onClick={handleProfile}
         >
-          تایید
+          Add
         </CustomButton>
       </ButtonStyle>
     </MainLayout>
