@@ -15,7 +15,7 @@ export const HelpText = ({
       style={{
         fontSize: t.fontSize.normal,
         fontFamily: t.fontFamily.MainFont,
-        color: t.color.borderColor,
+        color: t.color.fontColor,
       }}
       onClick={onClick}
     >
@@ -25,6 +25,6 @@ export const HelpText = ({
 };
 
 const Text = styled.p`
-  padding: 0;
+  margin: 0;
   cursor: pointer;
 `;

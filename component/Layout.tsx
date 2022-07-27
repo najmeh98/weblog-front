@@ -3,34 +3,49 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 import { useTheme } from "./Context/ThemeContext";
 import { HelpText } from "./HelpText";
+import { MainWrapper } from "./share/Container";
+import { ThemedText } from "./ThemedText";
 
 export default function Layout({
   children,
   title,
   textHelp,
   path,
+  link,
+  width,
+  style,
 }: {
   children: ReactNode;
   title: string;
   textHelp: string;
   path: string;
+  link: string;
+  width: string;
+  style: any;
 }): JSX.Element {
   let t = useTheme();
   let router = useRouter();
   return (
-    <ContentWrapper>
-      <FormContainer>
-        <Title>{title}</Title>
-        <Box style={{ borderRadius: t.borderRadius.normal }}>{children}</Box>
+    <MainWrapper>
+      {/* <FormContainer> */}
+      <Container style={{ borderRadius: t.borderRadius.normal }}>
+        <ThemedText>{title}</ThemedText>
+        {children}
         <HelpText
           onClick={() => {
             router.push(path);
           }}
         >
-          {textHelp}
+          {textHelp}{" "}
+          <span
+            style={{ color: t.color.buttonBg, fontWeight: t.fontWeight.bold }}
+          >
+            {link}
+          </span>
         </HelpText>
-      </FormContainer>
-    </ContentWrapper>
+      </Container>
+      {/* </FormContainer> */}
+    </MainWrapper>
   );
 }
 const ContentWrapper = styled.div`
@@ -47,7 +62,7 @@ const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: auto;
+  /* margin: auto; */
 `;
 
 const Title = styled.h1`
@@ -55,17 +70,18 @@ const Title = styled.h1`
   font-weight: 400;
   width: 100%;
   text-align: center;
+  margin: 10px;
 `;
-export const Box = styled.div`
+export const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 500px;
+  /* max-width: 500px; */
   /* height: 300px; */
 
-  border: 1px solid rgb(244, 244, 244);
-  box-shadow: 0 1px 11px hsl(0deg 0% 66% / 27%);
-  padding: 25px;
+  border: 1px solid rgb(230, 235, 235);
+  box-shadow: rgb(16 30 115 / 6%) 0px 6px 26px 0px;
+  padding: 30px;
 `;
