@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { OwnProp } from "../pages/auth/type";
 
 export const config = {
   apiUrl: "http://localhost:7000",
@@ -34,23 +35,13 @@ export const Login = ({
   return axios.post(`${config.apiUrl}/api/user/login`, { email, password });
 };
 
-export const Verification = ({
-  email,
-  password,
-  name,
-}: {
-  email: string;
-  password: string;
-  name: string;
-}): Promise<AxiosResponse<any, any>> | undefined => {
-  if (!email || !password || !name) {
+export const Verification = (
+  userInfo: OwnProp
+): Promise<AxiosResponse<any, any>> | undefined => {
+  if (!userInfo) {
     return;
   }
-  return axios.post(`${config.apiUrl}/api/user/auth`, {
-    name,
-    email,
-    password,
-  });
+  return axios.post(`${config.apiUrl}/api/user/auth`, { userInfo });
 };
 
 export const getData = async ({ id, token }: { id: number; token: any }) => {
