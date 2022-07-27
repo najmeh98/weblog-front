@@ -50,7 +50,7 @@ interface ProviderProps<T> {
 //     displayName?: string | undefined;
 // }
 
-export const AppContext: React.Context<ProviderProps> =
+export const AppContext: React.Context<ContextType> =
   createContext<ContextType>(initialValue);
 
 export const AppmanagerContext = ({
@@ -69,22 +69,6 @@ export const AppmanagerContext = ({
     console.log(state);
   }, [state]);
 
-  // useEffect(() => {
-  //   const token: any = localStorage.getItem("token");
-  //   const localEmail: any = localStorage.getItem("email");
-  //   console.log("token:", token);
-  //   if (!token || typeof token === "undefined") {
-  //     return;
-  //   }
-  //   if (!localEmail || typeof localEmail === "undefined") {
-  //     return;
-  //   }
-  //   dispatch({
-  //     type: "logged in",
-  //     payload: {},
-  //   });
-  // }, []);
-
   // roload page
 
   const handleReload = useCallback((): void => {
@@ -96,33 +80,44 @@ export const AppmanagerContext = ({
     if (!localEmail || typeof localEmail === "undefined") {
       return;
     }
-    axios
-      .post(
-        `${config.apiUrl}/api/data/userValid`,
-        {},
+    try {
+      axios
+        .post(
+          `${config.apiUrl}/api/data/userValid`,
+          {},
 
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      )
-      .then((result) => {
-        console.log(result);
-        if ((result.status as number) == 200) {
-          const Userdata = result?.data.user;
-          const Userpost = result?.data?.post;
-          dispatch({
-            type: "initial data",
-            payload: Userpost,
-          });
-          dispatch({ type: "logged in", payload: Userdata });
-        } else {
-          dispatch({ type: "logged out" });
-        }
-      })
-      .catch((err) => console.log(err));
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        )
+        .then((result) => {
+          console.log(result);
+          if ((result.status as number) == 200) {
+            const Userdata = result?.data.user;
+            const Userpost = result?.data?.post;
+            console.log(result);
+            dispatch({
+              type: "initial data",
+              payload: Userpost,
+            });
+            dispatch({ type: "logged in", payload: Userdata });
+          }
+          // else {
+          //   dispatch({
+          //     type: "logged out",
+          //     payload: { email: undefined, token: undefined },
+          //   });
+          // }
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  console.log(state);
 
   useEffect(() => {
     handleReload();
@@ -130,7 +125,7 @@ export const AppmanagerContext = ({
 
   const login = useCallback((prop: Prop): void => {
     console.log(prop);
-    let { token, email } = prop;
+    const { token, email } = prop;
     console.log(email);
     localStorage.setItem("token", token);
     localStorage.setItem("email", email);
@@ -169,7 +164,7 @@ export const AppmanagerContext = ({
         login,
         logout,
         dispatch,
-        state,
+        ...state,
       }}
     >
       {children}
@@ -205,7 +200,7 @@ function reducer<T>(state: State = initialState, action: Action): State {
       };
       break;
     case "logged out":
-      return { ...state, ...action.payload, isLoggedIn: false };
+      return { ...state, ...action.payload };
       break;
     case "post created":
       const updatepost = [...state.posts, { ...action.payload }];
