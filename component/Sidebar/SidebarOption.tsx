@@ -13,6 +13,7 @@ import axios from "axios";
 import { config } from "../Api";
 import { useAppContext } from "../AppContext";
 import { ThemedText } from "../ThemedText";
+import { FormItem } from "../share/Container";
 type item = {
   title: string;
   icon: JSX.Element;
@@ -20,28 +21,23 @@ type item = {
 };
 const Items: item[] = [
   {
-    title: "داشبورد",
-    icon: <GoHome />,
-    path: "/dashboard",
-  },
-  {
-    title: "افزودن پست",
+    title: "Add Post",
     icon: <CgNotes />,
     path: "/posts/addPost",
   },
   {
-    title: "دسته بندی ها",
+    title: "Category",
     icon: <AiOutlineBars />,
     path: "/",
   },
   {
-    title: "تنظیمات پروفایل",
+    title: "Setting",
     icon: <IoSettingsOutline />,
     path: "/user/profile",
   },
 
   {
-    title: "خروج",
+    title: "Exit",
     icon: <MdExitToApp />,
     path: "/exit",
   },
@@ -53,9 +49,9 @@ export const SidebarOption = (): JSX.Element => {
   let router = useRouter();
   let t = useTheme();
 
-  const { logout, login, state } = useAppContext();
-  console.log(state);
-  const { id, fullName }: any = state.userInfo;
+  const { logout, login, userInfo } = useAppContext();
+  // console.log(state);
+  const { id, fullName }: any = userInfo;
 
   return (
     <Wrapper
@@ -64,71 +60,65 @@ export const SidebarOption = (): JSX.Element => {
         boxShadow: t.boxShadowbox,
         fontSize: t.fontSize.normal,
         fontWeight: t.fontWeight.bold,
+        backgroundColor: "#1f2937",
       }}
     >
       <Navbar
         style={{
           height: "50px",
-          display: " flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "10px",
-          borderBottom: "1px solid #7a7a7a30",
-          cursor: "pointer",
+          borderBottom: "1px solid #fff",
         }}
       >
         <FaBars />
-        <ThemedText
-          onClick={() => router.push("/")}
-          style={{
-            fontWeight: t.fontWeight.bold,
-            fontSize: t.fontSize.semiLarge,
-            color: t.color.titleColor,
-          }}
-        >
-          {fullName}
-        </ThemedText>
       </Navbar>
 
-      {Items.map((item: item, index: number) => (
-        <SidebarItem
-          key={index}
-          // isActive={() => {
-          //   router.pathname === item.path;
-          // }}
-          onClick={() => {
-            if (item.path === "/user/profile") {
-              router.push({
-                pathname: "/user/profile",
-                query: { id: id, slug: fullName },
-              });
-            } else if (item.path === "/exit") {
-              logout();
-              router.push("/auth/register");
-            } else {
-              router.push(item.path as string);
-            }
-          }}
-          {...item}
-        />
-      ))}
+      <Sidebar>
+        {Items.map((item: item, index: number) => (
+          <SidebarItem
+            key={index}
+            isActive={router.pathname === item.path}
+            onClick={() => {
+              if (item.path === "/user/profile") {
+                router.push({
+                  pathname: "/user/profile",
+                  query: { id: id, slug: fullName },
+                });
+              } else if (item.path === "/exit") {
+                logout();
+                router.push("/auth/register");
+              } else {
+                router.push(item.path as string);
+              }
+            }}
+            {...item}
+          />
+        ))}
+      </Sidebar>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.ul`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  /* align-items: flex-start; */
+  /* background-image: linear-gradient(
+    to bottom,
+    #0d4c63,
+    #326d85,
+    #5290a9,
+    #73b5cf,
+    #94dbf5
+  ); */
 
-  /* justify-content: space-between; */
+  color: #fff;
   box-shadow: 0 1px 11px hsl(0deg 0% 66% / 27%);
   animation: 1s ease 0s 1 normal none running fadeIn;
-  /* background: #000; */
   height: 100vh;
   width: 300px;
-  gap: 30px;
+  gap: 20px;
   top: 0px;
+  /* gap: 35px; */
   bottom: 0;
   right: 0;
   z-index: 1;
@@ -139,10 +129,21 @@ const Wrapper = styled.ul`
   overflow-x: hidden;
 `;
 
-const Sidebar = styled.div``;
-
 const Navbar = styled.div`
-  width: 93%;
-  margin-left: 10px;
-  margin-right: 10px;
+  width: 100%;
+  padding: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: larger;
+`;
+
+const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px;
+  gap: 20px;
 `;
