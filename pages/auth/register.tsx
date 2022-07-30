@@ -7,11 +7,24 @@ import { CustomButton } from "../../component/CustomButton";
 import { CustomInput } from "../../component/CustomInput";
 import { HelpText } from "../../component/HelpText";
 import Layout from "../../component/Layout";
+import { FlexRow } from "../../component/share/Container";
+import { OwnProp } from "./type";
 
 export default function Register(): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [userInfo, setUserInfo] = useState<OwnProp>({
+    name: "",
+    family: "",
+    password: "",
+    repassword: "",
+    username: "",
+    phone: "",
+    email: "",
+    address: "",
+    sex: "",
+  });
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const { login: loggedIn } = useAppContext();
@@ -19,9 +32,9 @@ export default function Register(): JSX.Element {
   //Register
 
   const onSubmitVerification = useCallback(async (): Promise<void> => {
-    if (!email || !name || !password) return;
+    if (!userInfo.email || !userInfo.name || !userInfo.password) return;
     try {
-      let response = await Verification({ name, email, password });
+      let response = await Verification(userInfo);
       console.log(response);
       const status: number | undefined = response?.status;
       const { token }: { token: string } = response?.data?.user || {};
@@ -44,48 +57,112 @@ export default function Register(): JSX.Element {
         }
       }
     }
-  }, [email, loggedIn, name, password, router]);
+  }, [loggedIn, router, userInfo]);
 
   return (
     <>
       <Layout
-        title="ثبت نام"
-        textHelp="حساب کاربری دارید؟ ورود"
+        title="Sign Up"
+        link="Log in"
+        textHelp="Already have an account?"
         path="/auth/loginByEmail"
       >
-        <CustomInput
-          placeholder="نام"
-          label="نام"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          style={{ width: "80%" }}
-          type="text"
-          width="100%"
-        />
+        <FlexRow>
+          <CustomInput
+            placeholder="name"
+            label="name"
+            value={userInfo.name}
+            onChange={(event) =>
+              setUserInfo({ ...userInfo, name: event.target.value })
+            }
+            type="text"
+            width="100%"
+          />
+          <CustomInput
+            placeholder="last Name"
+            label="last Name"
+            value={userInfo.family}
+            onChange={(event) =>
+              setUserInfo({ ...userInfo, family: event.target.value })
+            }
+            type="text"
+            width="100%"
+          />
+        </FlexRow>
+
+        <FlexRow>
+          <CustomInput
+            placeholder="username"
+            label="username"
+            value={userInfo.username}
+            onChange={(event) =>
+              setUserInfo({ ...userInfo, username: event.target.value })
+            }
+            type="text"
+            width="100%"
+          />
+          <CustomInput
+            placeholder="phone"
+            label="phone"
+            value={userInfo.phone}
+            onChange={(event) =>
+              setUserInfo({ ...userInfo, phone: event.target.value })
+            }
+            type="text"
+            width="100%"
+          />
+        </FlexRow>
+
+        <FlexRow>
+          <CustomInput
+            label="password"
+            value={userInfo.password}
+            onChange={(event) =>
+              setUserInfo({ ...userInfo, password: event.target.value })
+            }
+            width="100%"
+            type="password"
+          />
+
+          <CustomInput
+            label="repassword"
+            value={userInfo.repassword}
+            onChange={(event) =>
+              setUserInfo({ ...userInfo, repassword: event.target.value })
+            }
+            width="100%"
+            type="password"
+          />
+        </FlexRow>
+
         <CustomInput
           placeholder="example@gmail.com"
-          label="آدرس ایمیل"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          style={{ width: "80%" }}
+          label="email"
+          value={userInfo.email}
+          onChange={(event) =>
+            setUserInfo({ ...userInfo, email: event.target.value })
+          }
           type="text"
           width="100%"
         />
+
         <CustomInput
-          label="رمز عبور"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          style={{ width: "80%" }}
-          type="password"
+          placeholder="address"
+          label="address"
+          value={userInfo.address}
+          onChange={(event) =>
+            setUserInfo({ ...userInfo, address: event.target.value })
+          }
+          type="text"
+          width="100%"
         />
+
         <CustomButton
           onClick={onSubmitVerification}
           width="100%"
-          maxWidth="80%"
-          label={""}
           style={{ justifyContent: "center" }}
         >
-          ثبت نام
+          Create Account
         </CustomButton>
       </Layout>
     </>
