@@ -17,11 +17,11 @@ export default function Layout({
 }: {
   children: ReactNode;
   title: string;
-  textHelp: string;
+  textHelp?: string;
   path: string;
-  link: string;
-  width: string;
-  style: any;
+  link?: string;
+  width?: string;
+  style?: any;
 }): JSX.Element {
   let t = useTheme();
   let router = useRouter();
