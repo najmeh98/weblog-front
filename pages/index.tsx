@@ -15,9 +15,6 @@ import PostInfo from "./posts/postInfo";
 const Home: NextPage = () => {
   const router = useRouter();
 
-  const { state }: any = useAppContext();
-  const isLoggedIn: boolean = state.isLoggedIn;
-
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   if (!isLoggedIn && !token) {

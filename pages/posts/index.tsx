@@ -19,20 +19,16 @@ import {
 
 interface State {
   id: number;
-  fullName: string;
   token: string;
 }
 export default function Posts(): JSX.Element {
-  const { state, dispatch } = useAppContext();
+  const { posts, dispatch, userInfo } = useAppContext();
   const [postItem, setPostItem] = useState<any | undefined>([]);
-  const { id, fullName, token }: State = state.userInfo;
-  const posts: any = state.posts;
 
-  // const postId: any = state.posts.id;
-  const router = useRouter();
+  const id: any = userInfo?.id;
+  const token: string = userInfo?.token;
 
-  console.log("state", state);
-  console.log("posts", posts);
+  // console.log("posts", posts);
 
   useEffect(() => {
     try {
@@ -65,7 +61,6 @@ export default function Posts(): JSX.Element {
       }
     }
   }, [dispatch, id, token]);
-  // console.log(state);
 
   const deletepost = (postId: any) => {
     axios
@@ -82,8 +77,6 @@ export default function Posts(): JSX.Element {
         console.log(err);
       });
   };
-
-  // console.log(postId);
 
   return (
     <MainWrapper>
@@ -115,12 +108,9 @@ const ContentStyle = styled.div`
 export const Wrapper = styled.div`
   width: 100%;
   padding: 10px;
-  /* margin: auto; */
 `;
 
 const CardsList = styled.div`
-  /* display: flex; */
-  /* flex-wrap: wrap; */
   align-items: center;
   display: grid;
   justify-content: center;

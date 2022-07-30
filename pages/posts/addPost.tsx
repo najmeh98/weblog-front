@@ -23,9 +23,9 @@ import { ThemedText } from "../../component/ThemedText";
 export default function AddPost(): JSX.Element {
   let router = useRouter();
   let t = useTheme();
-  let { state, dispatch } = useAppContext();
+  let { userInfo, dispatch } = useAppContext();
 
-  const { token }: any = state.userInfo;
+  const { token }: any = userInfo;
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,6 +57,7 @@ export default function AddPost(): JSX.Element {
     datapost.append("file", formData.file);
 
     console.log(datapost);
+
     axios
       .post(`${config.apiUrl}/api/data/add-post`, datapost, {
         headers: {
@@ -76,11 +77,11 @@ export default function AddPost(): JSX.Element {
   }, [dispatch, formData, token]);
 
   return (
-    <MainLayout title="ایجاد پست جدید">
+    <MainLayout title="add new post">
       <Space vertical={10} />
       <CustomInput
-        label=" عنوان پست"
-        placeholder="عنوان..."
+        label="title"
+        placeholder="title..."
         type="text"
         value={formData.title}
         onChange={(event) => {
@@ -90,8 +91,8 @@ export default function AddPost(): JSX.Element {
       <Space vertical={5} />
 
       <CustomInput
-        label="متن اصلی"
-        placeholder="متن اصلی"
+        label="text"
+        placeholder="text"
         type="textarea"
         value={formData.content}
         onChange={(event) =>
@@ -101,7 +102,7 @@ export default function AddPost(): JSX.Element {
       <Space vertical={10} />
 
       <CustomInput
-        label="انتخاب تصویر"
+        label="add file"
         type="file"
         enctype="multipart/form-data"
         onChange={uploadImageHandler}
@@ -123,15 +124,18 @@ export default function AddPost(): JSX.Element {
           color="errortext"
           onClick={() => router.push("/posts")}
         >
-          انصراف
+          Back
         </CustomButton>
 
         <CustomButton
           padding="10px 30px"
-          style={{ justifyContent: "flex-end", paddingLeft: "20px" }}
+          style={{
+            justifyContent: "flex-end",
+            paddingLeft: "20px",
+          }}
           onClick={CreatePostHandler}
         >
-          انتشار
+          Add
         </CustomButton>
       </ButtonStyle>
     </MainLayout>
