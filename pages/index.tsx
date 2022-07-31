@@ -15,13 +15,14 @@ import PostInfo from "./posts/postInfo";
 const Home: NextPage = () => {
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!isLoggedIn && !token) {
-  //     router.push("/auth/loginByEmail");
-  //   }
-  //   router.push("/");
-  // }, [isLoggedIn, router]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
+    if (!token && !email) {
+      router.push("/auth/loginByEmail");
+      return;
+    }
+  }, [router]);
 
   return (
     <div>
