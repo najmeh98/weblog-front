@@ -11,9 +11,6 @@ import { FlexRow } from "../../component/share/Container";
 import { OwnProp } from "./type";
 
 export default function Register(): JSX.Element {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [name, setName] = useState<string>("");
   const [userInfo, setUserInfo] = useState<OwnProp>({
     name: "",
     family: "",
