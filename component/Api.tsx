@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { OwnProp } from "../pages/auth/type";
 
 export const config = {
-  apiUrl: "http://localhost:7000",
+  apiUrl: "http://localhost:3001",
 };
 
 export const SendPostrequest = async ({
@@ -15,7 +15,7 @@ export const SendPostrequest = async ({
   token: string;
 }): Promise<void> => {
   axios.post(
-    `http://localhost:7000/${url}`,
+    `http://localhost:3001/${url}`,
     { data },
     { headers: { token: token } }
   );
