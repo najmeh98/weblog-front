@@ -66,6 +66,8 @@ export default function EditPost(): JSX.Element {
     formdata.append("file", formValue.file);
     console.log("info", formValue.title, formValue.content, formValue.file);
 
+    if (!id) return;
+
     setloading(true);
 
     axios
