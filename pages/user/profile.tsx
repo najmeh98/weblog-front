@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
-import { config, createname } from "../../component/Api";
+import { config } from "../../component/Api";
 import { useAppContext } from "../../component/AppContext";
 import MainLayout from "../../component/MainLayout";
 import { Space } from "../../component/share/Space";
@@ -10,14 +10,7 @@ import { useTheme } from "../../component/Context/ThemeContext";
 import { CustomButton } from "../../component/CustomButton";
 import { ButtonStyle } from "../../component/share/Container";
 import { CustomInput } from "../../component/CustomInput";
-
-interface formValueType {
-  password: any;
-  newpassword: any;
-  Renewpassword: any;
-  bio: string;
-  skill: string;
-}
+import { formValueType } from "./profileType";
 
 const initialValues = {
   password: "",
@@ -46,7 +39,7 @@ export default function Profile(): JSX.Element {
 
   const router = useRouter();
   console.log(id);
-  const handleProfile = () => {
+  const handleProfile = (): void => {
     if (profileValue.newpassword !== profileValue.Renewpassword) {
       // رمز عبور وارد شده با هم مطابقت ندارند.
     } else {
